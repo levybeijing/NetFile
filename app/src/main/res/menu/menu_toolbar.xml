@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings_64"
+        android:title="设置(测试中)"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/cloud_update"
+        android:icon="@mipmap/cloud_update"
+        android:title="版本更新"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/folder_delete"
+        android:icon="@mipmap/folder_delete_48"
+        android:title="文件清理"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/log_open"
+        android:title="日志开启"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/log_close"
+        android:title="日志关闭"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/plugin_down"
+        android:title="插件下载"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/setIndex"
+        android:title="设置设备编号"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/deviceInit"
+        android:title="设备信息初始化"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/deviceUpdate"
+        android:title="设备信息更新"
+        app:showAsAction="never" />
+</menu>
