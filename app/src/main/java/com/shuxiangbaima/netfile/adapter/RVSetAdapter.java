@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.flow.FlowActivity;
 import com.shuxiangbaima.netfile.memery.MemeryActivity;
+import com.shuxiangbaima.netfile.wifinearby.WifiInfoActivity;
 
 /**
  * Created by DIY on 2017/6/22.
@@ -54,7 +55,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder
                         context.startActivity(new Intent(context, MemeryActivity.class));
                         break;
                     case WIFI_NEARBY:
-
+                        context.startActivity(new Intent(context, WifiInfoActivity.class));
                         break;
                 }
             }
