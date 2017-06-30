@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.flowcount.FlowActivity;
 import com.shuxiangbaima.netfile.memery.MemeryActivity;
+import com.shuxiangbaima.netfile.netspeed.SpeedActivity;
 import com.shuxiangbaima.netfile.wifinearby.WifiInfoActivity;
 
 /**
@@ -49,7 +50,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder
                         context.startActivity(new Intent(context, FlowActivity.class));
                         break;
                     case INTERNET_SPEED:
-
+                        context.startActivity(new Intent(context, SpeedActivity.class));
                         break;
                     case MEMERY_USED:
                         context.startActivity(new Intent(context, MemeryActivity.class));
