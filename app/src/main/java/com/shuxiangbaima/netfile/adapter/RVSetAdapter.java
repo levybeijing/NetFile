@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shuxiangbaima.netfile.R;
-import com.shuxiangbaima.netfile.flow.FlowActivity;
+import com.shuxiangbaima.netfile.flowcount.FlowActivity;
 import com.shuxiangbaima.netfile.memery.MemeryActivity;
 import com.shuxiangbaima.netfile.wifinearby.WifiInfoActivity;
 

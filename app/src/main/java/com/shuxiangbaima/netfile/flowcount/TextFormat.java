@@ -1,4 +1,4 @@
-package com.shuxiangbaima.netfile.flow;
+package com.shuxiangbaima.netfile.flowcount;
 
 import java.text.DecimalFormat;
 
