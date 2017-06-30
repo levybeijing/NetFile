@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,10 +38,10 @@ public class MemeryActivity extends Activity {
         }
     };
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memery);
-
+        //安卓5.0以上系统无法获取其他进程信息
         rv = (RecyclerView) findViewById(R.id.rv_memery);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         rv.setLayoutManager(manager);
@@ -59,7 +58,7 @@ public class MemeryActivity extends Activity {
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 2000,2000);
+        timer.schedule(timerTask,2000,2000);
     }
 
     @Override

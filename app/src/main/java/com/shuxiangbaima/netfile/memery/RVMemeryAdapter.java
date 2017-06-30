@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.R;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class RVMemeryAdapter extends RecyclerView.Adapter<RVMemeryAdapter.MyView
 
     public void setData(List<ActivityManager.RunningAppProcessInfo> list_){
         list=list_;
+        MyLog.e("list.size=",list.size());
     }
 
     @Override

@@ -88,4 +88,11 @@ public class WifiInfoActivity extends Activity {
 
         tv.setText(otherwifi);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer=null;
+        timerTask=null;
+    }
 }
