@@ -64,7 +64,7 @@
         <service android:name=".progress.DownloadService"
             android:enabled="true"
             android:exported="true"
-            ></service>
+            />
     </application>
 
 </manifest>
