@@ -32,7 +32,7 @@ public class RVSpeedAdapter extends RecyclerView.Adapter<RVSpeedAdapter.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_rv_flow,parent,false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_rv_speed,parent,false));
     }
 
     @Override
