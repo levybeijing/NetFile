@@ -32,6 +32,7 @@ public class DownloadService extends IntentService {
     int downloadCount = 0;
 
     private String apkUrl;
+    private String fileName;
 
     public DownloadService() {
         super("DownloadService");
@@ -42,6 +43,7 @@ public class DownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         apkUrl=intent.getStringExtra("url");
+        fileName = apkUrl.substring(apkUrl.lastIndexOf("/")+1,apkUrl.length());
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationBuilder = new NotificationCompat.Builder(this)
@@ -71,8 +73,7 @@ public class DownloadService extends IntentService {
                 }
             }
         };
-        outputFile = new File(Environment.getExternalStoragePublicDirectory
-                (Environment.DIRECTORY_DOWNLOADS), "file.apk");
+        outputFile = new File(Environment.getExternalStorageDirectory(), fileName);
 
         if (outputFile.exists()) {
             outputFile.delete();
