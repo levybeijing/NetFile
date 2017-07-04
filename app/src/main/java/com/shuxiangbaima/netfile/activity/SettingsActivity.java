@@ -1,6 +1,8 @@
 package com.shuxiangbaima.netfile.activity;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.adapter.RVSetAdapter;
@@ -33,6 +36,7 @@ public class SettingsActivity extends Activity {
                 finish();
             }
         });
+
         Switch s= (Switch) findViewById(R.id.switch1);
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -44,8 +48,16 @@ public class SettingsActivity extends Activity {
                 }
             }
         });
+
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            ((TextView)findViewById(R.id.tv_set)).setText("当前版本为:"+info.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv_settings);
-//        LinearLayoutManager manager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         GridLayoutManager manager=new GridLayoutManager(this,1);
         rv.setLayoutManager(manager);
         String[] array = getResources().getStringArray(R.array.sets);

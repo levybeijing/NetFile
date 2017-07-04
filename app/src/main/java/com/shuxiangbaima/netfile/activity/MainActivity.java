@@ -87,6 +87,7 @@ public class MainActivity extends Activity {
         MyLog.e(TAG,"***onCreate***");
         //判断网络状态
         //下载words字库
+
         if (NetConnectUtil.isAnyConn(this))
             WordsDownUtil.wordsDown(Config.wordsUrl, Config.wordsPath);
         else{
