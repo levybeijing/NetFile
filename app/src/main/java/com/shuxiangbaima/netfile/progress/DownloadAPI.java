@@ -1,7 +1,8 @@
 package com.shuxiangbaima.netfile.progress;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
+
+import com.shuxiangbaima.netfile.MyLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +48,7 @@ class DownloadAPI{
     }
 
     public void downloadAPK(@NonNull String url, final File file, Subscriber subscriber) {
-        Log.d(TAG, "downloadAPK: " + url);
+        MyLog.e(TAG, "downloadAPK: " + url);
 
         retrofit.create(DownloadService_.class)
                 .download(url)

@@ -8,10 +8,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
-import com.shuxiangbaima.netfile.activity.MainActivity;
+import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.R;
+import com.shuxiangbaima.netfile.activity.MainActivity;
 
 import java.io.File;
 
@@ -45,11 +45,10 @@ public class DownloadService extends IntentService {
         apkUrl=intent.getStringExtra("url");
         fileName = apkUrl.substring(apkUrl.lastIndexOf("/")+1,apkUrl.length());
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Download")
-                .setContentText("Downloading File")
+                .setContentTitle("更新")
+                .setContentText("更新文件下载")
                 .setAutoCancel(true);
 
         notificationManager.notify(0, notificationBuilder.build());
@@ -92,7 +91,7 @@ public class DownloadService extends IntentService {
             public void onError(Throwable e) {
                 e.printStackTrace();
                 downloadCompleted();
-                Log.e(TAG, "onError: " + e.getMessage());
+                MyLog.e(TAG, "onError: " + e.getMessage());
             }
 
             @Override
@@ -109,7 +108,7 @@ public class DownloadService extends IntentService {
 
         notificationManager.cancel(0);
         notificationBuilder.setProgress(0, 0, false);
-        notificationBuilder.setContentText("File Downloaded");
+        notificationBuilder.setContentText("文件下载完成");
         notificationManager.notify(0, notificationBuilder.build());
 
         //安装apk
