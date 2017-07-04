@@ -1,6 +1,7 @@
 package com.shuxiangbaima.netfile.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -36,16 +37,16 @@ public class SettingsActivity extends Activity {
                 finish();
             }
         });
-
+        SharedPreferences preferences=getSharedPreferences("logToggle",MODE_PRIVATE);
+        boolean isCheck = preferences.getBoolean("isCheck", true);
         Switch s= (Switch) findViewById(R.id.switch1);
+        s.setChecked(isCheck);
+        final SharedPreferences.Editor edit = preferences.edit();
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-
-                }else{
-
-                }
+                edit.putBoolean("isCheck", true);
+                edit.commit();
             }
         });
 

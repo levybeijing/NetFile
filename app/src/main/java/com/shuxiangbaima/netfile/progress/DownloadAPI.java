@@ -39,7 +39,6 @@ class DownloadAPI{
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .build();
 
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(client)
