@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.flowcount.TrafficInfo;
-import com.shuxiangbaima.netfile.flowcount.TrafficManager;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class RVSpeedAdapter extends RecyclerView.Adapter<RVSpeedAdapter.MyViewHo
 
     public RVSpeedAdapter(Context context_){
         this.context=context_;
-        list=new TrafficManager(context_).getInternetTrafficInfos();
+//        list=;
     }
 
     public void setData(List<TrafficInfo> list_){

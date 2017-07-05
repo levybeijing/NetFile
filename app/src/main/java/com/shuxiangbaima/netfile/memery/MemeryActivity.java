@@ -2,7 +2,6 @@ package com.shuxiangbaima.netfile.memery;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,8 +28,7 @@ public class MemeryActivity extends Activity {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case REFRESH_TRAFFIC:
-                    adapter.setData(((ActivityManager)getSystemService(Context.ACTIVITY_SERVICE)).getRunningAppProcesses());
-                    adapter.notifyDataSetChanged();
+                    adapter.setData(((ActivityManager)getSystemService(ACTIVITY_SERVICE)).getRunningAppProcesses());
                     break;
                 default:
                     break;

@@ -37,6 +37,7 @@ public class SettingsActivity extends Activity {
                 finish();
             }
         });
+
         SharedPreferences preferences=getSharedPreferences("logToggle",MODE_PRIVATE);
         boolean isCheck = preferences.getBoolean("isCheck", true);
         Switch s= (Switch) findViewById(R.id.switch1);

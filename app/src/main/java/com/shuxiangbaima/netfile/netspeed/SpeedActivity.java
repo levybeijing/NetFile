@@ -22,8 +22,8 @@ public class SpeedActivity extends Activity {
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv_speed);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         rv.setLayoutManager(manager);
-
-//        rv.setAdapter();
+        RVSpeedAdapter adapter=new RVSpeedAdapter(this);
+        rv.setAdapter(adapter);
 
     }
 }
