@@ -10,7 +10,7 @@ import rx.Observable;
  * Created by DIY on 2017/6/20.
  */
 
-public interface DownloadService_ {
+public interface IDownloadService {
     @Streaming
     @GET
     Observable<ResponseBody> download(@Url String url);

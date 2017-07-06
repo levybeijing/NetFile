@@ -43,7 +43,7 @@ public class WifiInfoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivity_wifinearby);
+        setContentView(R.layout.activity_wifinearby);
 
         tv  = (TextView) findViewById(R.id.tv_wifi);
         wm = (WifiManager) getSystemService(Context.WIFI_SERVICE);

@@ -49,7 +49,7 @@ class DownloadAPI{
     public void downloadAPK(@NonNull String url, final File file, Subscriber subscriber) {
         MyLog.e(TAG, "downloadAPK: " + url);
 
-        retrofit.create(DownloadService_.class)
+        retrofit.create(IDownloadService.class)
                 .download(url)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
