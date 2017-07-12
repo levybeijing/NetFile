@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.flowcount.FlowActivity;
 import com.shuxiangbaima.netfile.memery.MemeryActivity;
-import com.shuxiangbaima.netfile.netspeed.SpeedActivity;
 import com.shuxiangbaima.netfile.wifinearby.WifiInfoActivity;
 
 /**
@@ -23,9 +22,8 @@ public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder
     private String[] array;
     private final int RUBBISH_CLEAN=0;
     private final int FLOW_COUNT=1;
-    private final int INTERNET_SPEED=2;
-    private final int MEMERY_USED=3;
-    private final int WIFI_NEARBY=4;
+    private final int MEMERY_USED=2;
+    private final int WIFI_NEARBY=3;
     public RVSetAdapter(Context context_,String[] array_){
         this.context=context_;
         this.array=array_;
@@ -49,9 +47,9 @@ public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder
                     case FLOW_COUNT:
                         context.startActivity(new Intent(context, FlowActivity.class));
                         break;
-                    case INTERNET_SPEED:
-                        context.startActivity(new Intent(context, SpeedActivity.class));
-                        break;
+//                    case INTERNET_SPEED:
+//                        context.startActivity(new Intent(context, SpeedActivity.class));
+//                        break;
                     case MEMERY_USED:
                         context.startActivity(new Intent(context, MemeryActivity.class));
                         break;

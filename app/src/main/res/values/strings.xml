@@ -3,7 +3,6 @@
     <string-array name="sets">
         <item>垃圾清理</item>
         <item>流量统计</item>
-        <item>实时网速</item>
         <item>内存使用</item>
         <item>周边WiFi</item>
     </string-array>

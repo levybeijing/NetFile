@@ -1,6 +1,5 @@
 package com.shuxiangbaima.netfile.wifinearby;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -8,6 +7,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.shuxiangbaima.netfile.R;
@@ -20,7 +20,7 @@ import java.util.TimerTask;
  * Created by DIY on 2017/6/29.
  */
 
-public class WifiInfoActivity extends Activity {
+public class WifiInfoActivity extends AppCompatActivity {
 
     private Timer timer;
     private TimerTask timerTask;
@@ -39,6 +39,7 @@ public class WifiInfoActivity extends Activity {
     };
     private TextView tv;
     private WifiManager wm;
+    private List<ScanResult> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +73,8 @@ public class WifiInfoActivity extends Activity {
         String ssid = info.getSSID();
 
         String otherwifi = "The existing network is: \n\n";
-
-        List<ScanResult> results = wm.getScanResults();//安卓5.0版本以下报空指针异常
+        //无法获取所有wifi值 只能获取当前wifi值
+        results = wm.getScanResults();
         int i=0;
         for (ScanResult result : results) {
             otherwifi += result.SSID  + ":" + result.level + "\n";
