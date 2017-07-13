@@ -47,9 +47,6 @@ public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder
                     case FLOW_COUNT:
                         context.startActivity(new Intent(context, FlowActivity.class));
                         break;
-//                    case INTERNET_SPEED:
-//                        context.startActivity(new Intent(context, SpeedActivity.class));
-//                        break;
                     case MEMERY_USED:
                         context.startActivity(new Intent(context, MemeryActivity.class));
                         break;

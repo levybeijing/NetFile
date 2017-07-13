@@ -25,7 +25,6 @@ public class WifiInfoActivity extends AppCompatActivity {
     private Timer timer;
     private TimerTask timerTask;
 
-
     private Handler mHandler = new Handler(){
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
@@ -73,7 +72,7 @@ public class WifiInfoActivity extends AppCompatActivity {
         String ssid = info.getSSID();
 
         String otherwifi = "The existing network is: \n\n";
-        //无法获取所有wifi值 只能获取当前wifi值
+        //4.4无法获取所有wifi值 只能获取当前wifi值
         results = wm.getScanResults();
         int i=0;
         for (ScanResult result : results) {
