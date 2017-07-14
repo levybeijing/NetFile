@@ -85,33 +85,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MyLog.e(TAG,"***onCreate***");
-        //判断网络状态
-        //下载words字库
+        //初始化控件
+        initView();
 
-        if (NetConnectUtil.isAnyConn(this))
+        //下载words字库
+        if (NetConnectUtil.isAnyConn(this)) {
             WordsDownUtil.wordsDown(Config.wordsUrl, Config.wordsPath);
-        else{
+        } else{
             Toast.makeText(MainActivity.this,"无网络链接,请设置",Toast.LENGTH_SHORT).show();
             MyLog.e(TAG,"无网络连接，字库下载失败");
         }
-        //初始化控件
-        progress = (ProgressBar) findViewById(R.id.progress);
-        progress_text = (TextView) findViewById(R.id.progress_text);
-        tv_phone_index = (TextView) findViewById(R.id.tv_phone_index);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         //动态注册广播
         registerReceiver();
-        //device	设备编号，唯一标识
-        device = DeviceInfo.getIndex();
-        //设置菜单响应事件
-        toolbar.setTitle("日志开启中...");
-        toolbar.inflateMenu(R.menu.menu_toolbar);
+        //记录wifi值  每次启动应用检测
+        wificheck();
 
-        if (device==null){
-            tv_phone_index.setText("暂无设备编号");
-        }else{
-            tv_phone_index.setText("设备编号:"+ device);
-        }
         //判断时间是否超过24hours
         SharedPreferences preferences = getSharedPreferences("time", Context.MODE_PRIVATE);
         final SharedPreferences.Editor edit = preferences.edit();
@@ -124,20 +112,7 @@ public class MainActivity extends Activity {
             edit.putLong("time",curTime);
             edit.commit();
         }
-        //记录wifi值  每次启动应用检测
-        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = wifi.getConnectionInfo();
-        String ssid = info.getSSID().replace("\"", "");
-        //先比较  然后记录
-        SharedPreferences wifi1 = getSharedPreferences("wifi", Context.MODE_PRIVATE);
-        String idOld = wifi1.getString("wifiId", null);
-        if (!ssid.equals(idOld)&&ssid!=null&&ssid.length()!=0){
-            SharedPreferences.Editor edit1 = wifi1.edit();
-            edit1.putString("wifiId",ssid);
-            edit1.commit();
-            MyLog.e(TAG,"记录wifi值为:"+idOld);
-            MyLog.e(TAG,"新的wifi值为:"+ssid);
-        }
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -207,6 +182,34 @@ public class MainActivity extends Activity {
         });
     }
 
+    private void wificheck() {
+        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = wifi.getConnectionInfo();
+        String ssid = info.getSSID().replace("\"", "");
+        //先比较  然后记录
+        SharedPreferences sf = getSharedPreferences("wifi", Context.MODE_PRIVATE);
+        String idOld = sf.getString("wifiId", null);
+        if (!ssid.equals(idOld)&&ssid!=null&&ssid.length()!=0){
+            SharedPreferences.Editor edit1 = sf.edit();
+            edit1.putString("wifiId",ssid);
+            edit1.commit();
+            MyLog.e(TAG,"wifi前值为:"+idOld);
+            MyLog.e(TAG,"wifi新值为:"+ssid);
+        }
+    }
+
+    private void initView() {
+        progress = (ProgressBar) findViewById(R.id.progress);
+        progress_text = (TextView) findViewById(R.id.progress_text);
+        tv_phone_index = (TextView) findViewById(R.id.tv_phone_index);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbar.setTitle("日志开启中...");
+        toolbar.inflateMenu(R.menu.menu_toolbar);
+        //device	设备编号，唯一标识
+        device = DeviceInfo.getIndex();
+        tv_phone_index.setText(device==null?"暂无设备编号":"设备编号:"+ device);
+    }
+
     private void setDeviceIndex() {
         final EditText editText = new EditText(MainActivity.this);
         AlertDialog.Builder inputDialog =
@@ -254,8 +257,8 @@ public class MainActivity extends Activity {
              } catch (Exception e) {
                 e.printStackTrace();
                 return null;
-            }
         }
+    }
 
     public void updatecheck() {
 
@@ -316,12 +319,14 @@ public class MainActivity extends Activity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscribe);
     }
+
     public interface UpdateApp {
         @POST("version/check")
         @FormUrlEncoded
         Observable<VersionUpdateBean> checkUpdate(@Field("package") String pkg,
                                                   @Field("version") String ver);
     }
+
     @Override
     protected void onStop() {
         super.onStop();
