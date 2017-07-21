@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.adapter.RVSetAdapter;
 
@@ -39,14 +40,15 @@ public class SettingsActivity extends Activity {
         });
 
         SharedPreferences preferences=getSharedPreferences("logToggle",MODE_PRIVATE);
-        boolean isCheck = preferences.getBoolean("isCheck", true);
+        final boolean isCheck = preferences.getBoolean("isCheck", true);
         Switch s= (Switch) findViewById(R.id.switch1);
         s.setChecked(isCheck);
         final SharedPreferences.Editor edit = preferences.edit();
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                edit.putBoolean("isCheck", true);
+                MyLog.setLogWritable(isChecked);
+                edit.putBoolean("isCheck",isChecked);
                 edit.commit();
             }
         });
@@ -54,7 +56,7 @@ public class SettingsActivity extends Activity {
         try {
             PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            ((TextView)findViewById(R.id.tv_set)).setText("当前版本为:"+info.versionName);
+            ((TextView)findViewById(R.id.tv_set)).setText("当前软件版本为:"+info.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

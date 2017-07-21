@@ -97,22 +97,20 @@ public class MainActivity extends Activity {
         }
         //动态注册广播
         registerReceiver();
-        //记录wifi值  每次启动应用检测
+        //TODO:记录wifi值  每次启动应用检测
         wificheck();
-
-        //判断时间是否超过24hours
+        //TODO:判断时间是否超过24hours
         SharedPreferences preferences = getSharedPreferences("time", Context.MODE_PRIVATE);
         final SharedPreferences.Editor edit = preferences.edit();
         final long curTime =System.currentTimeMillis();
         long oldTime = preferences.getLong("time", 0);
         MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/3600000+"小时");
-        //大于24小时  则更新
+        //TODO:大于24小时  则更新
         if (curTime-oldTime>86400000&&oldTime!=0){
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this));
             edit.putLong("time",curTime);
             edit.commit();
         }
-
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -180,6 +178,16 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //检测日至开关  放错地方了  应该onresume 方法中
+        SharedPreferences pre=getSharedPreferences("logToggle",MODE_PRIVATE);
+        boolean isCheck = pre.getBoolean("isCheck", true);
+        toolbar.setTitle(isCheck?"日志开启中...":"日志关闭中...");
+        //处理逻辑了  先是上次提交是否成功  然后上次提交时间是否超过十分钟  最后是设备信息是否发生改变(除devide外)
     }
 
     private void wificheck() {
