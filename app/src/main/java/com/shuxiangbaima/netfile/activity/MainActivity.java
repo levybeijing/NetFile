@@ -191,15 +191,17 @@ public class MainActivity extends Activity {
         if (!lastSubmit){
             //不成功就上传设备信息
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
+            return;
         }
         // 然后上次提交时间是否超过十分钟 大于10分钟  则更新
         final long curTime =System.currentTimeMillis();
         long oldTime = preferences.getLong("timeLastSubmit", 0);
-        MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/1000+"分钟");
+        MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/1000+"秒");
         if (curTime-oldTime>600000){
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
             edit.putLong("timeLastSubmit",curTime);
             edit.commit();
+            return;
         }
         //判断是否有设备编号 没有的话 直接跳过后面的代码
         // 最后是设备信息是否发生改变(除devide外)

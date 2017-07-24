@@ -53,7 +53,6 @@ public class DeviceInfo {
         sb.append("router=").append(ssid);
         sb.append("&");
         sb.append("mei=").append(mei);
-        MyLog.e("DeviceInfo:",sb);
         return sb;
     }
 
