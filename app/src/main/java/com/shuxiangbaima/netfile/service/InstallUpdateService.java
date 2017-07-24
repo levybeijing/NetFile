@@ -74,11 +74,10 @@ public class InstallUpdateService extends IntentService {
             @Override
             public void onNext(ResponseBody responseBody) {
                 File file=new File(path);
-                //TODO:判断路径是否存在!
                 if (!file.exists()){
                     new File(path.substring(0,path.lastIndexOf("/"))).mkdirs();
                     file=new File(path);
-                    MyLog.e(TAG,"file.getAbsolutePath:"+file.getAbsolutePath());
+                    MyLog.e(TAG,"更新文件的绝对路径:"+file.getAbsolutePath());
                 }
                 try {
                     String responseString = responseBody.string();

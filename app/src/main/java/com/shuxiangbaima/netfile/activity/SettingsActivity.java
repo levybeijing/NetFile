@@ -39,8 +39,8 @@ public class SettingsActivity extends Activity {
             }
         });
 
-        SharedPreferences preferences=getSharedPreferences("logToggle",MODE_PRIVATE);
-        final boolean isCheck = preferences.getBoolean("isCheck", true);
+        SharedPreferences preferences=getSharedPreferences("config",MODE_PRIVATE);
+        final boolean isCheck = preferences.getBoolean("logToggle", true);
         Switch s= (Switch) findViewById(R.id.switch1);
         s.setChecked(isCheck);
         final SharedPreferences.Editor edit = preferences.edit();
@@ -48,7 +48,7 @@ public class SettingsActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 MyLog.setLogWritable(isChecked);
-                edit.putBoolean("isCheck",isChecked);
+                edit.putBoolean("logToggle",isChecked);
                 edit.commit();
             }
         });

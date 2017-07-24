@@ -190,7 +190,10 @@ public class MainActivity extends Activity {
         String index = DeviceInfo.getIndex();
         if (index==null){
             MyLog.e("onResume","设备编号为空");
+            tv_phone_index.setText("暂无设备编号");
             return;
+        }else{
+            tv_phone_index.setText("设备编号:"+ index);
         }
         //处理逻辑  上次提交是否成功
         boolean lastSubmit = preferences.getBoolean("successLastSubmit", true);
@@ -221,17 +224,6 @@ public class MainActivity extends Activity {
             edit.putString("deviceInfo",deviceInfoNew.toString());
             edit.commit();
         }
-//        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-//        WifiInfo info = wifi.getConnectionInfo();
-//        String ssid = info.getSSID().replace("\"", "");
-//        //先比较  然后记录
-//        String idOld = preferences.getString("wifiName", null);
-//        if (!ssid.equals(idOld)&&ssid!=null&&ssid.length()!=0){
-//            edit.putString("wifiName",ssid);
-//            edit.commit();
-//            MyLog.e(TAG,"wifi前值为:"+idOld);
-//            MyLog.e(TAG,"wifi新值为:"+ssid);
-//        }
     }
 
     private void initView() {
@@ -243,6 +235,7 @@ public class MainActivity extends Activity {
         toolbar.inflateMenu(R.menu.menu_toolbar);
         //device	设备编号，唯一标识
         device = DeviceInfo.getIndex();
+        MyLog.e("DeviceInfo","phone_config文件内容："+device);
         tv_phone_index.setText(device==null?"暂无设备编号":"设备编号:"+ device);
     }
 

@@ -17,7 +17,6 @@ import java.io.IOException;
  */
 
 public class DeviceInfo {
-    private Context context;
 
     public static StringBuilder getDeviceInfo(Context context){
 
@@ -66,7 +65,6 @@ public class DeviceInfo {
         if (index.exists()){
             try {
                 String phone_index=new BufferedReader(new FileReader(index)).readLine();
-                MyLog.e("DeviceInfo","phone_config文件内容："+phone_index);
                 return phone_index.substring(phone_index.indexOf(":") + 1, phone_index.length());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
