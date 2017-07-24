@@ -20,7 +20,7 @@ public class DeviceInfo {
 
     public static StringBuilder getDeviceInfo(Context context){
 
-        String mei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        String imei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
 
         String device=getIndex();//设备编号
         //获取手机信息
@@ -51,7 +51,7 @@ public class DeviceInfo {
         sb.append("&");
         sb.append("router=").append(ssid);
         sb.append("&");
-        sb.append("mei=").append(mei);
+        sb.append("imei=").append(imei);
         return sb;
     }
 

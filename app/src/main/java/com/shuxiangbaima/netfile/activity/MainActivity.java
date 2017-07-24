@@ -206,7 +206,7 @@ public class MainActivity extends Activity {
         final long curTime =System.currentTimeMillis();
         long oldTime = preferences.getLong("timeLastSubmit", 0);
         MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/1000+"秒");
-        if (curTime-oldTime>600000){
+        if (curTime-oldTime>10000){
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
             edit.putLong("timeLastSubmit",curTime);
             edit.commit();
@@ -219,7 +219,7 @@ public class MainActivity extends Activity {
         String deviceInfo = preferences.getString("deviceInfo", null);
         MyLog.e(TAG,"旧的设备信息:"+deviceInfo);
 
-        if (deviceInfo!=deviceInfoNew.toString()){
+        if (deviceInfo!=null&&!deviceInfo.equals(deviceInfoNew.toString())){
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
             edit.putString("deviceInfo",deviceInfoNew.toString());
             edit.commit();

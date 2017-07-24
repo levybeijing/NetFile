@@ -3,6 +3,8 @@ package com.shuxiangbaima.netfile.downutils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.shuxiangbaima.netfile.Config;
+import com.shuxiangbaima.netfile.DeviceInfo;
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.bean.DeviceInfoBackBean;
 
@@ -46,7 +48,13 @@ public class DeviceInfoUploadUtil {
             public void onNext(DeviceInfoBackBean deviceInfo) {
                 SharedPreferences config = context.getSharedPreferences("config", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit = config.edit();
+
                 if (deviceInfo.getStatus()==200){
+                    if (url.contains(Config.deviceInfoInit)){
+                        MyLog.e(TAG,"设备信息初始化成功");
+                        edit.putString("deviceInfo", DeviceInfo.getDeviceInfo(context).toString());
+                        edit.commit();
+                    }
                     MyLog.e(TAG,"设备信息上传成功");
                     edit.putBoolean("successLastSubmit",true);
                     edit.commit();
