@@ -186,6 +186,12 @@ public class MainActivity extends Activity {
             MyLog.e("onResume","无网络");
             return;
         }
+        //判断是否有设备编号 没有的话 直接跳过后面的代码
+        String index = DeviceInfo.getIndex();
+        if (index==null){
+            MyLog.e("onResume","设备编号为空");
+            return;
+        }
         //处理逻辑  上次提交是否成功
         boolean lastSubmit = preferences.getBoolean("successLastSubmit", true);
         if (!lastSubmit){
@@ -203,13 +209,7 @@ public class MainActivity extends Activity {
             edit.commit();
             return;
         }
-        //判断是否有设备编号 没有的话 直接跳过后面的代码
         // 最后是设备信息是否发生改变(除devide外)
-        String index = DeviceInfo.getIndex();
-        if (index==null){
-            MyLog.e("onResume","设备编号为空");
-            return;
-        }
         StringBuilder deviceInfoNew = DeviceInfo.getDeviceInfo(this);
         MyLog.e(TAG,"新的设备信息:"+deviceInfoNew);
 
