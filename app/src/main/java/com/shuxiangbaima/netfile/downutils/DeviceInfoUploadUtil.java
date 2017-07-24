@@ -1,5 +1,8 @@
 package com.shuxiangbaima.netfile.downutils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.bean.DeviceInfoBackBean;
 
@@ -21,7 +24,7 @@ public class DeviceInfoUploadUtil {
 
     private static final String TAG="DeviceInfoUploadUtil";
 
-    public static void deviceDown(final String url){
+    public static void deviceDown(final String url, final Context context){
 
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl("http://api.shuxiangbaima.com/")
@@ -41,10 +44,16 @@ public class DeviceInfoUploadUtil {
 
             @Override
             public void onNext(DeviceInfoBackBean deviceInfo) {
+                SharedPreferences config = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = config.edit();
                 if (deviceInfo.getStatus()==200){
                     MyLog.e(TAG,"设备信息上传成功");
+                    edit.putBoolean("successLastSubmit",true);
+                    edit.commit();
                 }else{
                     MyLog.e(TAG,"设备信息上传失败:"+deviceInfo.getMsg());
+                    edit.putBoolean("successLastSubmit",false);
+                    edit.commit();
                 }
             }
         };

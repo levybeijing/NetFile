@@ -17,20 +17,27 @@ import java.io.IOException;
  */
 
 public class DeviceInfo {
+    private Context context;
 
     public static StringBuilder getDeviceInfo(Context context){
+
+        String mei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+
         String device=getIndex();//设备编号
         //获取手机信息
         String brand= Build.BRAND;//brand	品牌
+
         String model=Build.MODEL;//model	机型
 
         WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         String mac = info.getMacAddress();//mac		MAC地址
+
         String ipText = intToIp(info.getIpAddress());//wifi		内网IP
+
         String ssid = info.getSSID();//router	wifi名
         ssid = ssid.replace("\"", "");
-        String mei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+
         StringBuilder sb = new StringBuilder();
         sb.append("?");
         sb.append("device=").append(device);
@@ -50,7 +57,7 @@ public class DeviceInfo {
         return sb;
     }
 
-    private static String intToIp(int ip) {
+    public static String intToIp(int ip) {
         return (ip & 0xFF) + "." + ((ip >> 8) & 0xFF) + "." + ((ip >> 16) & 0xFF) + "."
                 + ((ip >> 24) & 0xFF);
     }

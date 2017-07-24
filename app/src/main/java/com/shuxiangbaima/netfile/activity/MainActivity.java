@@ -9,8 +9,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
@@ -79,6 +77,8 @@ public class MainActivity extends Activity {
             }
         }
     };
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,6 @@ public class MainActivity extends Activity {
         MyLog.e(TAG,"***onCreate***");
         //初始化控件
         initView();
-
         //下载words字库
         if (NetConnectUtil.isAnyConn(this)) {
             WordsDownUtil.wordsDown(Config.wordsUrl, Config.wordsPath);
@@ -97,20 +96,10 @@ public class MainActivity extends Activity {
         }
         //动态注册广播
         registerReceiver();
-        //TODO:记录wifi值  每次启动应用检测
-        wificheck();
-        //TODO:判断时间是否超过24hours
-        SharedPreferences preferences = getSharedPreferences("time", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor edit = preferences.edit();
-        final long curTime =System.currentTimeMillis();
-        long oldTime = preferences.getLong("time", 0);
-        MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/3600000+"小时");
-        //TODO:大于24小时  则更新
-        if (curTime-oldTime>86400000&&oldTime!=0){
-            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this));
-            edit.putLong("time",curTime);
-            edit.commit();
-        }
+        //制定一个文件 存储所有配置信息
+        preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+        edit = preferences.edit();
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -118,7 +107,7 @@ public class MainActivity extends Activity {
                     case R.id.settings:
                         startActivity(new Intent(MainActivity.this,SettingsActivity.class));
                         break;
-                    case R.id.cloud_update:
+                    case R.id.version_update:
                         if (!NetConnectUtil.isAnyConn(MainActivity.this)){
                             Toast.makeText(MainActivity.this,"无网络链接,请检查网络",Toast.LENGTH_SHORT).show();
                             MyLog.e(TAG,"无网络链接,下载失败");
@@ -126,50 +115,56 @@ public class MainActivity extends Activity {
                         }
                         updatecheck();
                         break;
-                    case R.id.folder_delete:
+                    case R.id.rubbish_clean:
                         tmpFileClean();
                         break;
                     case R.id.log_open:
                         MyLog.setLogWritable(true);
                         toolbar.setTitle("日志开启中...");
+                        edit.putBoolean("logToggle",true);
+                        edit.commit();
                         Toast.makeText(MainActivity.this, "日志开启", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.log_close:
                         MyLog.setLogWritable(false);
                         toolbar.setTitle("日志关闭中...");
+                        edit.putBoolean("logToggle",false);
+                        edit.commit();
                         Toast.makeText(MainActivity.this, "日志关闭", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.plugin_down:
                         startActivity(new Intent(MainActivity.this,PluginDownActivity.class));
                         break;
-                    case R.id.setIndex:
+                    case R.id.set_index:
                         setDeviceIndex();
                         break;
-                    case R.id.deviceInit:
+                    case R.id.device_init:
                         if (!NetConnectUtil.isAnyConn(MainActivity.this)){
                             Toast.makeText(MainActivity.this,"无网络链接,请检查网络",Toast.LENGTH_SHORT).show();
                             MyLog.e(TAG,"设备初始化无网络链接");
                             break;
                         }
                         if (device !=null){
-                            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoInit+DeviceInfo.getDeviceInfo(MainActivity.this));
-                            Toast.makeText(MainActivity.this,"已经提交初始化",Toast.LENGTH_SHORT).show();
-                            edit.putLong("time",curTime);
+                            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoInit+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
+                            Toast.makeText(MainActivity.this,"设备已经提交初始化",Toast.LENGTH_SHORT).show();
+                            edit.putLong("timeInitSubmit",System.currentTimeMillis());
                             edit.commit();
-                            MyLog.e(TAG,"初始化时间为："+new Date().toString());
+                            MyLog.e(TAG,"设备初始化时间为："+new Date().toString());
                         }else{
                             Toast.makeText(MainActivity.this,"无设备编号,请设置",Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case R.id.deviceUpdate:
+                    case R.id.device_update:
                         if (!NetConnectUtil.isAnyConn(MainActivity.this)){
                             Toast.makeText(MainActivity.this,"无网络链接,请检查网络",Toast.LENGTH_SHORT).show();
                             MyLog.e(TAG,"设备更新无网络链接");
                             break;
                         }
                         if (device !=null){
-                            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this));
+                            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
                             Toast.makeText(MainActivity.this,"已经提交更新",Toast.LENGTH_SHORT).show();
+                            edit.putLong("timeLastSubmit",System.currentTimeMillis());
+                            edit.commit();
                         }else{
                             Toast.makeText(MainActivity.this,"无设备编号,请设置",Toast.LENGTH_SHORT).show();
                         }
@@ -183,27 +178,58 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        //检测日至开关  放错地方了  应该onresume 方法中
-        SharedPreferences pre=getSharedPreferences("logToggle",MODE_PRIVATE);
-        boolean isCheck = pre.getBoolean("isCheck", true);
+        //检测日至开关
+        boolean isCheck = preferences.getBoolean("logToggle", true);
         toolbar.setTitle(isCheck?"日志开启中...":"日志关闭中...");
-        //处理逻辑了  先是上次提交是否成功  然后上次提交时间是否超过十分钟  最后是设备信息是否发生改变(除devide外)
-    }
-
-    private void wificheck() {
-        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = wifi.getConnectionInfo();
-        String ssid = info.getSSID().replace("\"", "");
-        //先比较  然后记录
-        SharedPreferences sf = getSharedPreferences("wifi", Context.MODE_PRIVATE);
-        String idOld = sf.getString("wifiId", null);
-        if (!ssid.equals(idOld)&&ssid!=null&&ssid.length()!=0){
-            SharedPreferences.Editor edit1 = sf.edit();
-            edit1.putString("wifiId",ssid);
-            edit1.commit();
-            MyLog.e(TAG,"wifi前值为:"+idOld);
-            MyLog.e(TAG,"wifi新值为:"+ssid);
+        //监测网络是否可用
+        if (!NetConnectUtil.isAnyConn(this)){
+            MyLog.e("onResume","无网络");
+            return;
         }
+        //处理逻辑  上次提交是否成功
+        boolean lastSubmit = preferences.getBoolean("successLastSubmit", true);
+        if (!lastSubmit){
+            //不成功就上传设备信息
+            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
+        }
+        // 然后上次提交时间是否超过十分钟 大于10分钟  则更新
+        final long curTime =System.currentTimeMillis();
+        long oldTime = preferences.getLong("timeLastSubmit", 0);
+        MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/1000+"分钟");
+        if (curTime-oldTime>600000){
+            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
+            edit.putLong("timeLastSubmit",curTime);
+            edit.commit();
+        }
+        //判断是否有设备编号 没有的话 直接跳过后面的代码
+        // 最后是设备信息是否发生改变(除devide外)
+        String index = DeviceInfo.getIndex();
+        if (index==null){
+            MyLog.e("onResume","设备编号为空");
+            return;
+        }
+        StringBuilder deviceInfoNew = DeviceInfo.getDeviceInfo(this);
+        MyLog.e(TAG,"新的设备信息:"+deviceInfoNew);
+
+        String deviceInfo = preferences.getString("deviceInfo", null);
+        MyLog.e(TAG,"旧的设备信息:"+deviceInfo);
+
+        if (deviceInfo!=deviceInfoNew.toString()){
+            DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
+            edit.putString("deviceInfo",deviceInfoNew.toString());
+            edit.commit();
+        }
+//        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+//        WifiInfo info = wifi.getConnectionInfo();
+//        String ssid = info.getSSID().replace("\"", "");
+//        //先比较  然后记录
+//        String idOld = preferences.getString("wifiName", null);
+//        if (!ssid.equals(idOld)&&ssid!=null&&ssid.length()!=0){
+//            edit.putString("wifiName",ssid);
+//            edit.commit();
+//            MyLog.e(TAG,"wifi前值为:"+idOld);
+//            MyLog.e(TAG,"wifi新值为:"+ssid);
+//        }
     }
 
     private void initView() {
@@ -335,22 +361,11 @@ public class MainActivity extends Activity {
                                                   @Field("version") String ver);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        MyLog.e(TAG,"***onStop***");
-    }
     private void registerReceiver() {
         bManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MESSAGE_PROGRESS);
         bManager.registerReceiver(broadcastReceiver, intentFilter);
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        MyLog.e(TAG,"***onDestroy***");
-        bManager.unregisterReceiver(broadcastReceiver);
     }
 
     public void tmpFileClean() {
@@ -374,5 +389,20 @@ public class MainActivity extends Activity {
             }
         }
         cleanDir.delete();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MyLog.e(TAG,"***onStop***");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyLog.e(TAG,"***onDestroy***");
+        bManager.unregisterReceiver(broadcastReceiver);
+        preferences=null;
+        edit=null;
     }
 }
