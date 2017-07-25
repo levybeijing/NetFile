@@ -52,9 +52,9 @@ public class DeviceInfoUploadUtil {
                 if (deviceInfo.getStatus()==200){
                     if (url.contains(Config.deviceInfoInit)){
                         MyLog.e(TAG,"设备信息初始化成功");
-                        edit.putString("deviceInfo", DeviceInfo.getDeviceInfo(context).toString());
-                        edit.commit();
                     }
+                    edit.putString("deviceInfo", DeviceInfo.getInfoNoIndex(context).toString());
+                    edit.commit();
                     MyLog.e(TAG,"设备信息上传成功");
                     edit.putBoolean("successLastSubmit",true);
                     edit.commit();

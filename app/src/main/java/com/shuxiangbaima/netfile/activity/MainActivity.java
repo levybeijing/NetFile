@@ -206,23 +206,20 @@ public class MainActivity extends Activity {
         final long curTime =System.currentTimeMillis();
         long oldTime = preferences.getLong("timeLastSubmit", 0);
         MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/1000+"秒");
-        if (curTime-oldTime>10000){
+        if (curTime-oldTime>600000){
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
             edit.putLong("timeLastSubmit",curTime);
             edit.commit();
             return;
         }
         // 最后是设备信息是否发生改变(除devide外)
-        StringBuilder deviceInfoNew = DeviceInfo.getDeviceInfo(this);
-        MyLog.e(TAG,"新的设备信息:"+deviceInfoNew);
-
+        StringBuilder deviceInfoNew = DeviceInfo.getInfoNoIndex(this);
         String deviceInfo = preferences.getString("deviceInfo", null);
-        MyLog.e(TAG,"旧的设备信息:"+deviceInfo);
-
         if (deviceInfo!=null&&!deviceInfo.equals(deviceInfoNew.toString())){
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
             edit.putString("deviceInfo",deviceInfoNew.toString());
             edit.commit();
+            MyLog.e(TAG,"新的设备信息:"+deviceInfoNew);
         }
     }
 

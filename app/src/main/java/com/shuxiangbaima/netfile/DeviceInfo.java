@@ -20,9 +20,16 @@ public class DeviceInfo {
 
     public static StringBuilder getDeviceInfo(Context context){
 
-        String imei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-
         String device=getIndex();//设备编号
+
+        StringBuilder sb =getInfoNoIndex(context);
+        sb.append("&");
+        sb.append("device=").append(device);
+        return sb;
+    }
+    public static StringBuilder getInfoNoIndex(Context context){
+
+        String imei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         //获取手机信息
         String brand= Build.BRAND;//brand	品牌
 
@@ -39,8 +46,6 @@ public class DeviceInfo {
 
         StringBuilder sb = new StringBuilder();
         sb.append("?");
-        sb.append("device=").append(device);
-        sb.append("&");
         sb.append("brand=").append(brand);
         sb.append("&");
         sb.append("model=").append(model);
