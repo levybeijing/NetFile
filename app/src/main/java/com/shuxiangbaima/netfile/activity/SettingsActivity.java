@@ -57,7 +57,7 @@ public class SettingsActivity extends Activity {
         try {
             PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            ((TextView)findViewById(R.id.tv_set)).setText("版本号:"+info.versionName);
+            ((TextView)findViewById(R.id.tv_set)).setText("检验更新"+"(当前版本号:"+info.versionName+")");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

@@ -33,6 +33,12 @@ public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        if (position==0){
+
+        }
+        if (position==1){
+
+        }
         holder.tv.setText(array[position]);
         holder.tv.setOnClickListener(new View.OnClickListener() {
             @Override

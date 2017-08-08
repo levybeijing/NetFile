@@ -44,6 +44,5 @@ public class PluginDownActivity extends Activity {
         if (NetConnectUtil.isAnyConn(this))
         PluginDataUtil.pluginDown(Config.pluginUrl,rv_plugin,this);
         else Toast.makeText(this,"请检查网络",Toast.LENGTH_SHORT).show();
-
     }
 }
