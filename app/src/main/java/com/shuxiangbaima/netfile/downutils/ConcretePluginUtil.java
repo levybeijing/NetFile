@@ -46,7 +46,7 @@ public class ConcretePluginUtil {
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(context,"插件下载失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"插件下载失败:"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 MyLog.e(TAG,"onError:"+e.getMessage());
             }
 

@@ -1,7 +1,6 @@
 package com.shuxiangbaima.netfile.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shuxiangbaima.netfile.R;
-import com.shuxiangbaima.netfile.flowcount.FlowActivity;
-import com.shuxiangbaima.netfile.memery.MemeryActivity;
-import com.shuxiangbaima.netfile.wifinearby.WifiInfoActivity;
 
 /**
  * Created by DIY on 2017/6/22.
@@ -20,10 +16,11 @@ import com.shuxiangbaima.netfile.wifinearby.WifiInfoActivity;
 public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder> {
     private Context context;
     private String[] array;
-    private final int RUBBISH_CLEAN=0;
-    private final int FLOW_COUNT=1;
-    private final int MEMERY_USED=2;
-    private final int WIFI_NEARBY=3;
+    private final int A=0;
+    private final int B=1;
+    private final int C=2;
+    private final int D=3;
+
     public RVSetAdapter(Context context_,String[] array_){
         this.context=context_;
         this.array=array_;
@@ -41,17 +38,17 @@ public class RVSetAdapter extends RecyclerView.Adapter<RVSetAdapter.MyViewHolder
             @Override
             public void onClick(View v) {
                 switch (position){
-                    case RUBBISH_CLEAN:
-
+                    case A:
+//垃圾清理
                         break;
-                    case FLOW_COUNT:
-                        context.startActivity(new Intent(context, FlowActivity.class));
+                    case B:
+//设置编号
                         break;
-                    case MEMERY_USED:
-                        context.startActivity(new Intent(context, MemeryActivity.class));
+                    case C:
+//信息初始化
                         break;
-                    case WIFI_NEARBY:
-                        context.startActivity(new Intent(context, WifiInfoActivity.class));
+                    case D:
+//信息更新
                         break;
                 }
             }

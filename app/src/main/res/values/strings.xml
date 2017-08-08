@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">手机助手</string>
     <string-array name="sets">
-        <item>垃圾清理</item>
-        <item>流量统计</item>
-        <item>内存使用</item>
-        <item>周边WiFi</item>
+        <item>文件清理</item>
+        <item>设置设备编号</item>
+        <item>设备信息初始化</item>
+        <item>设备信息更新</item>
     </string-array>
 </resources>

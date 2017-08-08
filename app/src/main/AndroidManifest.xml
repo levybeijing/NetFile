@@ -37,23 +37,7 @@
             android:screenOrientation="portrait"
             >
         </activity>
-        <activity android:name=".flowcount.FlowActivity"
-            android:screenOrientation="portrait"
-            >
-        </activity>
         <activity android:name=".activity.SettingsActivity"
-            android:screenOrientation="portrait"
-            >
-        </activity>
-        <activity android:name=".memery.MemeryActivity"
-            android:screenOrientation="portrait"
-            >
-        </activity>
-        <activity android:name=".wifinearby.WifiInfoActivity"
-            android:screenOrientation="portrait"
-            >
-        </activity>
-        <activity android:name=".netspeed.SpeedActivity"
             android:screenOrientation="portrait"
             >
         </activity>

@@ -5,7 +5,7 @@
     <item
         android:id="@+id/settings"
         android:icon="@drawable/settings_64"
-        android:title="设置(测试中)"
+        android:title="设置"
         app:showAsAction="ifRoom" />
 
     <item

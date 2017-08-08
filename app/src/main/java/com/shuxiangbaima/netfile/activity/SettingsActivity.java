@@ -43,6 +43,7 @@ public class SettingsActivity extends Activity {
         final boolean isCheck = preferences.getBoolean("logToggle", true);
         Switch s= (Switch) findViewById(R.id.switch1);
         s.setChecked(isCheck);
+
         final SharedPreferences.Editor edit = preferences.edit();
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -56,7 +57,7 @@ public class SettingsActivity extends Activity {
         try {
             PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            ((TextView)findViewById(R.id.tv_set)).setText("当前软件版本为:"+info.versionName);
+            ((TextView)findViewById(R.id.tv_set)).setText("版本号:"+info.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
