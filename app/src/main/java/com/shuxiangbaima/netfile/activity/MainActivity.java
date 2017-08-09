@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
         initView();
         //下载words字库
         if (NetConnectUtil.isAnyConn(this)) {
-            WordsDownUtil.wordsDown(Config.wordsUrl, Config.wordsPath);
+            WordsDownUtil.wordsDown(Config.wordsUrl, Config.wordsPath,this);
         } else{
             Toast.makeText(MainActivity.this,"无网络链接,请设置",Toast.LENGTH_SHORT).show();
             MyLog.e(TAG,"无网络连接，字库下载失败");
@@ -94,6 +94,11 @@ public class MainActivity extends Activity {
         //检测日至开关
         boolean isCheck = preferences.getBoolean("logToggle", true);
         toolbar.setTitle(isCheck?"日志开启中...":"日志关闭中...");
+        //设置设备更新的开关
+        boolean isEnable=preferences.getBoolean("deviceAutoUpdateToggle", true);
+        if (!isEnable){
+            return;
+        }
         //监测网络是否可用
         if (!NetConnectUtil.isAnyConn(this)){
             MyLog.e("onResume","无网络");

@@ -2,6 +2,7 @@ package com.shuxiangbaima.netfile.downutils;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.adapter.RVAdapter;
@@ -13,9 +14,6 @@ import java.util.List;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -37,11 +35,13 @@ public class PluginDataUtil {
         Subscriber subscribe = new Subscriber<PluginBean>() {
             @Override
             public void onCompleted() {
+                MyLog.e(TAG,"插件数据下载完毕");
             }
 
             @Override
             public void onError(Throwable e) {
-                MyLog.e(TAG,"插件下载失败--onError:"+e.getMessage());
+                Toast.makeText(context,"插件数据下载失败--onError:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                MyLog.e(TAG,"插件数据下载失败--onError:"+e.getMessage());
             }
 
             @Override
@@ -60,9 +60,5 @@ public class PluginDataUtil {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscribe);
-    }
-    public interface IPluginData{
-        @GET
-        Observable<PluginBean> getData(@Url String fileUrl);
     }
 }

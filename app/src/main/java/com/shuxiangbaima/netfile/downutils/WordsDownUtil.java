@@ -1,5 +1,8 @@
 package com.shuxiangbaima.netfile.downutils;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.shuxiangbaima.netfile.MyLog;
 
 import java.io.File;
@@ -11,9 +14,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -26,7 +26,7 @@ public class WordsDownUtil {
 
     private static final String TAG="WordsDownUtil";
 
-    public static void wordsDown(String url, final String path){
+    public static void wordsDown(String url, final String path, final Context context){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl("http://api.shuxiangbaima.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -35,11 +35,12 @@ public class WordsDownUtil {
         Subscriber subscribe = new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
-                MyLog.e(TAG,"----字库更新结束----\n");
+                MyLog.e(TAG,"字库更新结束");
             }
 
             @Override
             public void onError(Throwable e) {
+                Toast.makeText(context,"字库更新失败--onError:"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 MyLog.e(TAG,"字库更新失败--onError:"+e.getMessage());
             }
 
@@ -66,9 +67,5 @@ public class WordsDownUtil {
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(subscribe);
-    }
-    public interface IWord{
-        @GET
-        Observable<ResponseBody> getData(@Url String fileUrl);
     }
 }

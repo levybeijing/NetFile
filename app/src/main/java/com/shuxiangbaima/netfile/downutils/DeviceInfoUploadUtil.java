@@ -2,6 +2,7 @@ package com.shuxiangbaima.netfile.downutils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.shuxiangbaima.netfile.Config;
 import com.shuxiangbaima.netfile.DeviceInfo;
@@ -11,9 +12,6 @@ import com.shuxiangbaima.netfile.bean.DeviceInfoBackBean;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -36,11 +34,20 @@ public class DeviceInfoUploadUtil {
         Subscriber subscribe = new Subscriber<DeviceInfoBackBean>() {
             @Override
             public void onCompleted() {
+                if (url.contains(Config.deviceInfoInit)){
+                    Toast.makeText(context,"设备信息已经初始化",Toast.LENGTH_SHORT).show();
+                    MyLog.e(TAG,"设备信息初始化成功");
+
+                }else{
+                    Toast.makeText(context,"设备信息已经更新",Toast.LENGTH_SHORT).show();
+                    MyLog.e(TAG,"设备信息更新成功");
+                }
                 MyLog.e(TAG,"onCompleted");
             }
 
             @Override
             public void onError(Throwable e) {
+                Toast.makeText(context,"设备信息提交失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 MyLog.e(TAG,"onError:"+e.getMessage());
             }
 
@@ -50,12 +57,8 @@ public class DeviceInfoUploadUtil {
                 SharedPreferences.Editor edit = config.edit();
 
                 if (deviceInfo.getStatus()==200){
-                    if (url.contains(Config.deviceInfoInit)){
-                        MyLog.e(TAG,"设备信息初始化成功");
-                    }
                     edit.putString("deviceInfo", DeviceInfo.getInfoNoIndex(context).toString());
                     edit.commit();
-                    MyLog.e(TAG,"设备信息上传成功");
                     edit.putBoolean("successLastSubmit",true);
                     edit.commit();
                 }else{
@@ -65,14 +68,10 @@ public class DeviceInfoUploadUtil {
                 }
             }
         };
-        Device device = retrofit.create(Device.class);
+        IDeviceUpload device = retrofit.create(IDeviceUpload.class);
         device.getData(url)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(subscribe);
-    }
-    public interface Device{
-        @GET
-        Observable<DeviceInfoBackBean> getData(@Url String fileUrl);
     }
 }

@@ -6,7 +6,6 @@
         android:id="@+id/switch_setting"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:text="日志开关"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_centerVertical="true"

@@ -14,9 +14,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -40,8 +37,8 @@ public class ConcretePluginUtil {
         Subscriber subscribe = new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
-                MyLog.e(TAG,"插件下载完毕");
                 Toast.makeText(context,"插件下载完毕",Toast.LENGTH_SHORT).show();
+                MyLog.e(TAG,"插件下载完毕");
             }
 
             @Override
@@ -69,9 +66,5 @@ public class ConcretePluginUtil {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscribe);
-    }
-    public interface IConcretePluginUtil{
-        @GET
-        Observable<ResponseBody> getData(@Url String fileUrl);
     }
 }

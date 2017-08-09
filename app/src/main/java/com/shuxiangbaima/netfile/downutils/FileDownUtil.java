@@ -11,9 +11,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -78,15 +75,11 @@ public class FileDownUtil {
                 }
             }
         };
-        NetData netData = retrofit.create(NetData.class);
+        INetFile netData = retrofit.create(INetFile.class);
         netData.getData(url)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscribe);
         return true;
-    }
-    public interface NetData {
-        @GET
-        Observable<ResponseBody> getData(@Url String fileUrl);
     }
 }

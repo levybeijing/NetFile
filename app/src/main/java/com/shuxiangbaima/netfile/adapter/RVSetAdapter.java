@@ -49,9 +49,9 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType==0){
+        if (viewType==0||viewType==1){
             return new MyViewHolder0(LayoutInflater.from(context).inflate(R.layout.item0_rv_settings,parent,false));
-        }else if (viewType==1){
+        }else if (viewType==2){
             return new MyViewHolder1(LayoutInflater.from(context).inflate(R.layout.item1_rv_settings,parent,false));
         }else {
             return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_rv_settings,parent,false));
@@ -65,8 +65,8 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final String index = DeviceInfo.getIndex();
         if (position==0){
             final boolean isCheck = preferences.getBoolean("logToggle", true);
+            ((MyViewHolder0)holder).s.setText("日志开关");
             ((MyViewHolder0)holder).s.setChecked(isCheck);
-
             ((MyViewHolder0)holder).s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -81,6 +81,23 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             });
         }else if (position==1){
+            final boolean isEnable = preferences.getBoolean("deviceAutoUpdateToggle", true);
+            ((MyViewHolder0)holder).s.setText("设备自动更新开关");
+            ((MyViewHolder0)holder).s.setChecked(isEnable);
+            ((MyViewHolder0)holder).s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    MyLog.setLogWritable(isChecked);
+                    edit.putBoolean("deviceAutoUpdateToggle",isChecked);
+                    edit.commit();
+                    if (isChecked){
+                        Toast.makeText(context,"自动更新开启",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context,"自动更新关闭",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }else if (position==2){
             ((MyViewHolder1)holder).tv.setText("版本号:"+getVersion());
         }else{
             ((MyViewHolder)holder).tv.setText(array[position-2]);
@@ -120,7 +137,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             }
                             if (index !=null){
                                 DeviceInfoUploadUtil.deviceDown(Config.deviceInfoInit+ DeviceInfo.getDeviceInfo(context),context);
-                                Toast.makeText(context,"设备已经提交初始化",Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context,"设备信息已经初始化",Toast.LENGTH_SHORT).show();
                                 edit.putLong("timeInitSubmit",System.currentTimeMillis());
                                 edit.commit();
                                 MyLog.e(TAG,"设备初始化时间为："+new Date().toString());
@@ -137,12 +154,15 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             }
                             if (index !=null){
                                 DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(context),context);
-                                Toast.makeText(context,"已经提交更新",Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context,"设备信息已经更新",Toast.LENGTH_SHORT).show();
                                 edit.putLong("timeLastSubmit",System.currentTimeMillis());
                                 edit.commit();
                             }else{
                                 Toast.makeText(context,"无设备编号,请设置",Toast.LENGTH_SHORT).show();
                             }
+                            break;
+                        case 8:
+
                             break;
                     }
                 }
