@@ -11,37 +11,9 @@
         >
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:text="日志开关"
-            android:textSize="20sp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        >
-        <TextView
-            android:id="@+id/tv_set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:textSize="20sp"
-            android:layout_centerInParent="true"
-            />
-    </RelativeLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
 </LinearLayout>

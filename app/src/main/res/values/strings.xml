@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">手机助手</string>
     <string-array name="sets">
+        <item>版本更新</item>
+        <item>插件下载</item>
         <item>文件清理</item>
         <item>设置设备编号</item>
         <item>设备信息初始化</item>

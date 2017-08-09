@@ -34,25 +34,11 @@ public class MyLog {
         log(tag, text, 'e');
     }
 
-    /**
-     * 根据tag, msg和等级，输出日志
-     *
-     * @param tag
-     * @param msg
-     * @param level
-     * @return void
-     * @since v 1.0
-     */
     private static void log(String tag, String msg, char level) {
             if (MYLOG_WRITE_TO_FILE)
                 writeLogtoFile(String.valueOf(level), tag, msg);
     }
 
-    /**
-     * 打开日志文件并写入日志
-     *
-     * @return
-     * **/
     private static void writeLogtoFile(String mylogtype, String tag, String text) {// 新建或打开日志文件
         Date nowtime = new Date();
         String needWriteFile = logfile.format(nowtime);
@@ -81,9 +67,6 @@ public class MyLog {
         }
     }
 
-    /**
-     * 删除指定的日志文件
-     * */
     public static void delFile() {// 删除日志文件
         String needDelFiel = logfile.format(getDateBefore());
         File file = new File(MYLOG_PATH_SDCARD_DIR, needDelFiel + MYLOGFILEName);

@@ -1,19 +1,12 @@
 package com.shuxiangbaima.netfile.activity;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
 
-import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.adapter.RVSetAdapter;
 
@@ -38,29 +31,6 @@ public class SettingsActivity extends Activity {
                 finish();
             }
         });
-
-        SharedPreferences preferences=getSharedPreferences("config",MODE_PRIVATE);
-        final boolean isCheck = preferences.getBoolean("logToggle", true);
-        Switch s= (Switch) findViewById(R.id.switch1);
-        s.setChecked(isCheck);
-
-        final SharedPreferences.Editor edit = preferences.edit();
-        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MyLog.setLogWritable(isChecked);
-                edit.putBoolean("logToggle",isChecked);
-                edit.commit();
-            }
-        });
-
-        try {
-            PackageManager manager = this.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            ((TextView)findViewById(R.id.tv_set)).setText("检验更新"+"(当前版本号:"+info.versionName+")");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv_settings);
         GridLayoutManager manager=new GridLayoutManager(this,1);
