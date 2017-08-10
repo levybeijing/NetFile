@@ -22,7 +22,7 @@ import com.shuxiangbaima.netfile.DeviceInfo;
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.NetConnectUtil;
 import com.shuxiangbaima.netfile.R;
-import com.shuxiangbaima.netfile.VersionUpdate;
+import com.shuxiangbaima.netfile.activity.VersionUpdate;
 import com.shuxiangbaima.netfile.activity.PluginDownActivity;
 import com.shuxiangbaima.netfile.downutils.DeviceInfoUploadUtil;
 
@@ -82,7 +82,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
         }else if (position==1){
             final boolean isEnable = preferences.getBoolean("deviceAutoUpdateToggle", true);
-            ((MyViewHolder0)holder).s.setText("设备自动更新开关");
+            ((MyViewHolder0)holder).s.setText("设备信息自动更新开关");
             ((MyViewHolder0)holder).s.setChecked(isEnable);
             ((MyViewHolder0)holder).s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -137,7 +137,6 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             }
                             if (index !=null){
                                 DeviceInfoUploadUtil.deviceDown(Config.deviceInfoInit+ DeviceInfo.getDeviceInfo(context),context);
-//                                Toast.makeText(context,"设备信息已经初始化",Toast.LENGTH_SHORT).show();
                                 edit.putLong("timeInitSubmit",System.currentTimeMillis());
                                 edit.commit();
                                 MyLog.e(TAG,"设备初始化时间为："+new Date().toString());
@@ -154,7 +153,6 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             }
                             if (index !=null){
                                 DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(context),context);
-//                                Toast.makeText(context,"设备信息已经更新",Toast.LENGTH_SHORT).show();
                                 edit.putLong("timeLastSubmit",System.currentTimeMillis());
                                 edit.commit();
                             }else{

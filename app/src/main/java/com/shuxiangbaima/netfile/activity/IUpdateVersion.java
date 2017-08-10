@@ -11,7 +11,7 @@ import rx.Observable;
  * Created by DIY on 2017/8/9.
  */
 
-public interface UpdateVersion {
+public interface IUpdateVersion {
     @POST("version/check")
     @FormUrlEncoded
     Observable<VersionUpdateBean> checkUpdate(@Field("package") String pkg,

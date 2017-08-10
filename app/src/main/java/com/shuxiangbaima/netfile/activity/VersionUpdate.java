@@ -1,4 +1,4 @@
-package com.shuxiangbaima.netfile;
+package com.shuxiangbaima.netfile.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-import com.shuxiangbaima.netfile.activity.UpdateVersion;
+import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.bean.VersionUpdateBean;
 import com.shuxiangbaima.netfile.progress.DownloadService;
 
@@ -78,7 +78,7 @@ public class VersionUpdate {
                 MyLog.e(TAG,"***onCompleted***");
             }
         };
-        UpdateVersion update = retrofit.create(UpdateVersion.class);
+        IUpdateVersion update = retrofit.create(IUpdateVersion.class);
         update.checkUpdate(context.getPackageName(),context.getPackageManager().getPackageInfo(context.getPackageName(),0).versionName)///
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
