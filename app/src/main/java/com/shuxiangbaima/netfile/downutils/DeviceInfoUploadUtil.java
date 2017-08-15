@@ -34,15 +34,19 @@ public class DeviceInfoUploadUtil {
         Subscriber subscribe = new Subscriber<DeviceInfoBackBean>() {
             @Override
             public void onCompleted() {
+                MyLog.e(TAG,"onCompleted");
+                SharedPreferences preferences = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+                boolean aBoolean = preferences.getBoolean("initSubmit", false);
+                if (!aBoolean){
+                    return;
+                }
                 if (url.contains(Config.deviceInfoInit)){
                     Toast.makeText(context,"设备信息已经初始化",Toast.LENGTH_SHORT).show();
                     MyLog.e(TAG,"设备信息初始化成功");
-
                 }else{
                     Toast.makeText(context,"设备信息已经更新",Toast.LENGTH_SHORT).show();
                     MyLog.e(TAG,"设备信息更新成功");
                 }
-                MyLog.e(TAG,"onCompleted");
             }
 
             @Override

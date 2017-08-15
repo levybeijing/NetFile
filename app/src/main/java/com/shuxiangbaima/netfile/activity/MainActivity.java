@@ -96,7 +96,8 @@ public class MainActivity extends Activity {
         toolbar.setTitle(isCheck?"日志开启中...":"日志关闭中...");
         //设置设备更新的开关
         boolean isEnable=preferences.getBoolean("deviceAutoUpdateToggle", true);
-        if (!isEnable){
+        boolean aBoolean = preferences.getBoolean("initSubmit", false);
+        if (!isEnable&&!aBoolean){
             return;
         }
         //监测网络是否可用

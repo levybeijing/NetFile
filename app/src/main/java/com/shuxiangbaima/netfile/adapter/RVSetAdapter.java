@@ -138,6 +138,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             if (index !=null){
                                 DeviceInfoUploadUtil.deviceDown(Config.deviceInfoInit+ DeviceInfo.getDeviceInfo(context),context);
                                 edit.putLong("timeInitSubmit",System.currentTimeMillis());
+                                edit.putBoolean("initSubmit",true);
                                 edit.commit();
                                 MyLog.e(TAG,"设备初始化时间为："+new Date().toString());
                             }else{
