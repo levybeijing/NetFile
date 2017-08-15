@@ -67,6 +67,7 @@ public class VersionUpdate {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 MyLog.e(TAG,"软件开始更新");
+                                /////
                                 Intent intent=new Intent(context,DownloadService.class);
                                 intent.putExtra("url",download_url);
                                 context.startService(intent);
