@@ -100,12 +100,12 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }else if (position==2){
             ((MyViewHolder1)holder).tv.setText("版本号:"+getVersion());
         }else{
-            ((MyViewHolder)holder).tv.setText(array[position-2]);
+            ((MyViewHolder)holder).tv.setText(array[position-3]);
             ((MyViewHolder)holder).tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     switch (position){
-                        case 2:
+                        case 3:
                             //检测更新
                             if (!NetConnectUtil.isAnyConn(context)){
                                 Toast.makeText(context,"无网络链接,请检查网络",Toast.LENGTH_SHORT).show();
@@ -118,17 +118,17 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 e.printStackTrace();
                             }
                             break;
-                        case 3:
+                        case 4:
                             context.startActivity(new Intent(context,PluginDownActivity.class));
                             break;
-                        case 4:
+                        case 5:
                             tmpFileClean();//垃圾清理
                             break;
-                        case 5:
+                        case 6:
                             //设置编号
                             setDeviceIndex();
                             break;
-                        case 6:
+                        case 7:
                             //信息初始化
                             if (!NetConnectUtil.isAnyConn(context)){
                             Toast.makeText(context,"无网络链接,请检查网络",Toast.LENGTH_SHORT).show();
@@ -145,7 +145,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 Toast.makeText(context,"无设备编号,请设置",Toast.LENGTH_SHORT).show();
                             }
                             break;
-                        case 7:
+                        case 8:
                             //信息更新
                             if (!NetConnectUtil.isAnyConn(context)){
                                 Toast.makeText(context,"无网络链接,请检查网络",Toast.LENGTH_SHORT).show();
@@ -159,9 +159,6 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             }else{
                                 Toast.makeText(context,"无设备编号,请设置",Toast.LENGTH_SHORT).show();
                             }
-                            break;
-                        case 8:
-
                             break;
                     }
                 }
@@ -178,7 +175,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return array.length+2;
+        return array.length+3;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder
