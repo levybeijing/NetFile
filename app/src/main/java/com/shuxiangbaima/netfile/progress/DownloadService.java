@@ -11,10 +11,9 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.R;
-import com.shuxiangbaima.netfile.activity.MainActivity;
+import com.shuxiangbaima.netfile.activity.SettingsActivity;
 
 import java.io.File;
-
 import rx.Subscriber;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -131,7 +130,7 @@ public class DownloadService extends IntentService {
     }
     //发送广播
     private void sendIntent(Download download) {
-        Intent intent = new Intent(MainActivity.MESSAGE_PROGRESS);
+        Intent intent = new Intent(SettingsActivity.MESSAGE_PROGRESS);
         intent.putExtra("download", download);
         LocalBroadcastManager.getInstance(DownloadService.this).sendBroadcast(intent);
     }

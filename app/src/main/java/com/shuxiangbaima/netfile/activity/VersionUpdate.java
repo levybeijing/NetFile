@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.shuxiangbaima.netfile.MyLog;
+import com.shuxiangbaima.netfile.NetConnectUtil;
 import com.shuxiangbaima.netfile.bean.VersionUpdateBean;
 import com.shuxiangbaima.netfile.progress.DownloadService;
 
@@ -67,11 +68,13 @@ public class VersionUpdate {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 MyLog.e(TAG,"软件开始更新");
-                                /////
+                                //
                                 Intent intent=new Intent(context,DownloadService.class);
                                 intent.putExtra("url",download_url);
                                 context.startService(intent);
+                                if (NetConnectUtil.isAnyConn(context))
                                 Toast.makeText(context,"开始下载",Toast.LENGTH_SHORT).show();
+                                else  Toast.makeText(context,"无网络",Toast.LENGTH_SHORT).show();
                             }
                         }).setNegativeButton("返回",null).show();
             }

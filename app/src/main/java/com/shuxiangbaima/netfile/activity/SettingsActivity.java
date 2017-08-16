@@ -17,13 +17,12 @@ import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.adapter.RVSetAdapter;
 
-import static com.shuxiangbaima.netfile.activity.MainActivity.MESSAGE_PROGRESS;
-
 /**
  * Created by DIY on 2017/6/21.
  */
 
 public class SettingsActivity extends Activity {
+    public static final String MESSAGE_PROGRESS = "message_progress";
     private static final String TAG="SettingsActivity";
     private Toolbar bar;
     private LocalBroadcastManager bManager;
@@ -34,15 +33,13 @@ public class SettingsActivity extends Activity {
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-//
+
 //            if (intent.getAction().equals(MESSAGE_PROGRESS)) {
 //                //接收到第一时间创建对话框
 //                if (!isShowDialog){
 ////                //创建对话框
 //                    dialog = new ProgressDialog(SettingsActivity.this);
-//                    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置进度条的形式为圆形转动的进度条
 //                    dialog.setCancelable(true);// 设置是否可以通过点击Back键取消
-//                    dialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
 //                    dialog.setTitle("下载");
 //                    dialog.setMax(100);
 //                    dialog.show();
