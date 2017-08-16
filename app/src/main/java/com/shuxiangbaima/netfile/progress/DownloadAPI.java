@@ -28,12 +28,12 @@ class DownloadAPI{
     private static final int DEFAULT_TIMEOUT = 15;
     public Retrofit retrofit;
 
-    public DownloadAPI(String url, DownloadProgressListener listener) {
+    public DownloadAPI(String url, DPListener listener) {
 
-        DownloadProgressInterceptor interceptor = new DownloadProgressInterceptor(listener);
+        DPInterceptor interceptor = new DPInterceptor(listener);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                //
+                //加入拦截器
                 .addInterceptor(interceptor)
                 .retryOnConnectionFailure(true)
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)

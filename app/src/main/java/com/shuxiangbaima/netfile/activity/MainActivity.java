@@ -1,13 +1,10 @@
 package com.shuxiangbaima.netfile.activity;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
@@ -21,37 +18,35 @@ import com.shuxiangbaima.netfile.NetConnectUtil;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.downutils.DeviceInfoUploadUtil;
 import com.shuxiangbaima.netfile.downutils.WordsDownUtil;
-import com.shuxiangbaima.netfile.progress.Download;
-import com.shuxiangbaima.netfile.progress.StringUtils;
 
 public class MainActivity extends Activity {
     public static final String MESSAGE_PROGRESS = "message_progress";
     private static final String TAG="MainActivity";
     private String device;
 
-    private LocalBroadcastManager bManager;
+//    private LocalBroadcastManager bManager;
     private TextView tv_phone_index;
     private Toolbar toolbar;
     private ProgressBar progress;
     private TextView progress_text;
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(MESSAGE_PROGRESS)) {
-                Download download = intent.getParcelableExtra("download");
-                progress.setProgress(download.getProgress());
-                if (download.getProgress() == 100) {
-                    progress_text.setText("File Download Complete");
-                } else {
-                    progress_text.setText(
-                            StringUtils.getDataSize(download.getCurrentFileSize())
-                                    + "/" +
-                                    StringUtils.getDataSize(download.getTotalFileSize()));
-                }
-            }
-        }
-    };
+//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            if (intent.getAction().equals(MESSAGE_PROGRESS)) {
+//                Download download = intent.getParcelableExtra("download");
+//                progress.setProgress(download.getProgress());
+//                if (download.getProgress() == 100) {
+//                    progress_text.setText("File Download Complete");
+//                } else {
+//                    progress_text.setText(
+//                            StringUtils.getDataSize(download.getCurrentFileSize())
+//                                    + "/" +
+//                                    StringUtils.getDataSize(download.getTotalFileSize()));
+//                }
+//            }
+//        }
+//    };
     private SharedPreferences preferences;
     private SharedPreferences.Editor edit;
 
@@ -70,7 +65,7 @@ public class MainActivity extends Activity {
             MyLog.e(TAG,"无网络连接，字库下载失败");
         }
         //动态注册广播
-        registerReceiver();
+//        registerReceiver();
         //制定一个文件 存储所有配置信息
         preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         edit = preferences.edit();
@@ -155,12 +150,12 @@ public class MainActivity extends Activity {
         tv_phone_index.setText(device==null?"暂无设备编号":"设备编号:"+ device);
     }
 
-    private void registerReceiver() {
-        bManager = LocalBroadcastManager.getInstance(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(MESSAGE_PROGRESS);
-        bManager.registerReceiver(broadcastReceiver, intentFilter);
-    }
+//    private void registerReceiver() {
+//        bManager = LocalBroadcastManager.getInstance(this);
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(MESSAGE_PROGRESS);
+//        bManager.registerReceiver(broadcastReceiver, intentFilter);
+//    }
 
     @Override
     protected void onStop() {
@@ -172,7 +167,7 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         MyLog.e(TAG,"***onDestroy***");
-        bManager.unregisterReceiver(broadcastReceiver);
+//        bManager.unregisterReceiver(broadcastReceiver);
         preferences=null;
         edit=null;
     }

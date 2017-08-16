@@ -9,11 +9,11 @@ import okhttp3.Response;
  * Created by DIY on 2017/6/20.
  */
 
-class DownloadProgressInterceptor implements Interceptor {
+class DPInterceptor implements Interceptor {
 
-    private DownloadProgressListener listener;
+    private DPListener listener;
 
-    public DownloadProgressInterceptor(DownloadProgressListener listener) {
+    public DPInterceptor(DPListener listener) {
         this.listener = listener;
     }
 
@@ -22,7 +22,7 @@ class DownloadProgressInterceptor implements Interceptor {
         Response originalResponse = chain.proceed(chain.request());
 
         return originalResponse.newBuilder()
-                .body(new DownloadProgressResponseBody(originalResponse.body(), listener))
+                .body(new DPResponseBody(originalResponse.body(), listener))
                 .build();
     }
 }

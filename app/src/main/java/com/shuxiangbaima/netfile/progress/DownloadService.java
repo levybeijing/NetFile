@@ -57,7 +57,7 @@ public class DownloadService extends IntentService {
     }
 
     private void download() {
-        DownloadProgressListener listener = new DownloadProgressListener() {
+        DPListener listener = new DPListener() {
             @Override
             public void update(long bytesRead, long contentLength, boolean done) {
                 //不频繁发送通知，防止通知栏下拉卡顿
@@ -67,7 +67,7 @@ public class DownloadService extends IntentService {
                     download.setTotalFileSize(contentLength);
                     download.setCurrentFileSize(bytesRead);
                     download.setProgress(progress);
-
+                    /////
                     sendNotification(download);
                 }
             }
@@ -84,12 +84,14 @@ public class DownloadService extends IntentService {
         new DownloadAPI(baseUrl, listener).downloadAPK(apkUrl, outputFile, new Subscriber() {
             @Override
             public void onCompleted() {
+                /////
                 downloadCompleted();
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                ////
                 downloadCompleted();
                 MyLog.e(TAG, "onError: " + e.getMessage());
             }
@@ -127,9 +129,8 @@ public class DownloadService extends IntentService {
                         StringUtils.getDataSize(download.getTotalFileSize()));
         notificationManager.notify(0, notificationBuilder.build());
     }
-
+    //发送广播
     private void sendIntent(Download download) {
-
         Intent intent = new Intent(MainActivity.MESSAGE_PROGRESS);
         intent.putExtra("download", download);
         LocalBroadcastManager.getInstance(DownloadService.this).sendBroadcast(intent);

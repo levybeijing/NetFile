@@ -1,21 +1,71 @@
 package com.shuxiangbaima.netfile.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.adapter.RVSetAdapter;
+
+import static com.shuxiangbaima.netfile.activity.MainActivity.MESSAGE_PROGRESS;
 
 /**
  * Created by DIY on 2017/6/21.
  */
 
 public class SettingsActivity extends Activity {
+    private static final String TAG="SettingsActivity";
     private Toolbar bar;
+    private LocalBroadcastManager bManager;
+
+    private boolean isShowDialog=false;
+    private ProgressDialog dialog;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //接收到第一时间创建对话框
+            if (!isShowDialog){
+//                //创建对话框
+//                dialog = new ProgressDialog(SettingsActivity.this);
+//                dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置进度条的形式为圆形转动的进度条
+//                dialog.setCancelable(true);// 设置是否可以通过点击Back键取消
+//                dialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
+//                dialog.setTitle("下载");
+//                dialog.setMax(100);
+//                dialog.show();
+            }
+            if (intent.getAction().equals(MESSAGE_PROGRESS)) {
+//                Download download = intent.getParcelableExtra("download");
+//                int l=download.getProgress();
+//                dialog.setProgress(l);
+//                if (l>=100){
+//                    dialog.dismiss();
+//                }
+
+//                int l = (int)(100*download.getCurrentFileSize() / download.getTotalFileSize());
+//                progress.setProgress(download.getProgress());
+//                if (download.getProgress() == 100) {
+//                    progress_text.setText("File Download Complete");
+//                } else {
+//                    progress_text.setText(
+//                            StringUtils.getDataSize(download.getCurrentFileSize())
+//                                    + "/" +
+//                                    StringUtils.getDataSize(download.getTotalFileSize()));
+//                }
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,5 +88,21 @@ public class SettingsActivity extends Activity {
         String[] array = getResources().getStringArray(R.array.sets);
         RVSetAdapter adapter=new RVSetAdapter(this,array);
         rv.setAdapter(adapter);
+
+
+        registerReceiver();
+    }
+    private void registerReceiver() {
+        bManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MESSAGE_PROGRESS);
+        bManager.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyLog.e(TAG,"***onDestroy***");
+        bManager.unregisterReceiver(broadcastReceiver);
     }
 }

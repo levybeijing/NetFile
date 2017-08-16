@@ -14,14 +14,14 @@ import okio.Source;
  * Created by DIY on 2017/6/20.
  */
 
-class DownloadProgressResponseBody extends ResponseBody {
+class DPResponseBody extends ResponseBody {
 
     private ResponseBody responseBody;
-    private DownloadProgressListener progressListener;
+    private DPListener progressListener;
     private BufferedSource bufferedSource;
 
-    public DownloadProgressResponseBody(ResponseBody responseBody,
-                                        DownloadProgressListener progressListener) {
+    public DPResponseBody(ResponseBody responseBody,
+                          DPListener progressListener) {
         this.responseBody = responseBody;
         this.progressListener = progressListener;
     }
