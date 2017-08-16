@@ -34,13 +34,6 @@ public class MainActivity extends Activity {
         MyLog.e(TAG,"***onCreate***");
         //初始化控件
         initView();
-        //下载words字库
-        if (NetConnectUtil.isAnyConn(this)) {
-            WordsDownUtil.wordsDown(Config.wordsUrl, Config.wordsPath,this);
-        } else{
-            Toast.makeText(MainActivity.this,"无网络链接,请设置",Toast.LENGTH_SHORT).show();
-            MyLog.e(TAG,"无网络连接，字库下载失败");
-        }
         //制定一个文件 存储所有配置信息
         preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         edit = preferences.edit();

@@ -27,8 +27,8 @@ public class SettingsActivity extends Activity {
     private Toolbar bar;
     private LocalBroadcastManager bManager;
 
-    private boolean isShowDialog=false;
-    private ProgressDialog dialog;
+//    private boolean isShowDialog=false;
+//    private ProgressDialog dialog;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override

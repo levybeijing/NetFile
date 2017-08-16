@@ -22,9 +22,11 @@ import com.shuxiangbaima.netfile.DeviceInfo;
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.NetConnectUtil;
 import com.shuxiangbaima.netfile.R;
+import com.shuxiangbaima.netfile.activity.MainActivity;
 import com.shuxiangbaima.netfile.activity.VersionUpdate;
 import com.shuxiangbaima.netfile.activity.PluginDownActivity;
 import com.shuxiangbaima.netfile.downutils.DeviceInfoUploadUtil;
+import com.shuxiangbaima.netfile.downutils.WordsDownUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -158,6 +160,15 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 edit.commit();
                             }else{
                                 Toast.makeText(context,"无设备编号,请设置",Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case 9:
+                            //下载words字库
+                            if (NetConnectUtil.isAnyConn(context)) {
+                                WordsDownUtil.wordsDown(Config.wordsUrl, Config.wordsPath,context);
+                            } else{
+                                Toast.makeText(context,"无网络链接,请设置",Toast.LENGTH_SHORT).show();
+                                MyLog.e(TAG,"无网络连接，字库下载失败");
                             }
                             break;
                     }

@@ -35,6 +35,7 @@ public class WordsDownUtil {
         Subscriber subscribe = new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
+                Toast.makeText(context,"字库已更新",Toast.LENGTH_SHORT).show();
                 MyLog.e(TAG,"字库更新结束");
             }
 
