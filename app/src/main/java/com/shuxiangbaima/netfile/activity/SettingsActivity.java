@@ -34,36 +34,26 @@ public class SettingsActivity extends Activity {
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //接收到第一时间创建对话框
-            if (!isShowDialog){
-//                //创建对话框
-//                dialog = new ProgressDialog(SettingsActivity.this);
-//                dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置进度条的形式为圆形转动的进度条
-//                dialog.setCancelable(true);// 设置是否可以通过点击Back键取消
-//                dialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
-//                dialog.setTitle("下载");
-//                dialog.setMax(100);
-//                dialog.show();
-            }
-            if (intent.getAction().equals(MESSAGE_PROGRESS)) {
+//
+//            if (intent.getAction().equals(MESSAGE_PROGRESS)) {
+//                //接收到第一时间创建对话框
+//                if (!isShowDialog){
+////                //创建对话框
+//                    dialog = new ProgressDialog(SettingsActivity.this);
+//                    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置进度条的形式为圆形转动的进度条
+//                    dialog.setCancelable(true);// 设置是否可以通过点击Back键取消
+//                    dialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
+//                    dialog.setTitle("下载");
+//                    dialog.setMax(100);
+//                    dialog.show();
+//                }
 //                Download download = intent.getParcelableExtra("download");
 //                int l=download.getProgress();
 //                dialog.setProgress(l);
 //                if (l>=100){
 //                    dialog.dismiss();
 //                }
-
-//                int l = (int)(100*download.getCurrentFileSize() / download.getTotalFileSize());
-//                progress.setProgress(download.getProgress());
-//                if (download.getProgress() == 100) {
-//                    progress_text.setText("File Download Complete");
-//                } else {
-//                    progress_text.setText(
-//                            StringUtils.getDataSize(download.getCurrentFileSize())
-//                                    + "/" +
-//                                    StringUtils.getDataSize(download.getTotalFileSize()));
-//                }
-            }
+//            }
         }
     };
 

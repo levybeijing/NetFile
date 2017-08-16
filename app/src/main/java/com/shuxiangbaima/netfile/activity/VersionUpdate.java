@@ -71,6 +71,7 @@ public class VersionUpdate {
                                 Intent intent=new Intent(context,DownloadService.class);
                                 intent.putExtra("url",download_url);
                                 context.startService(intent);
+                                Toast.makeText(context,"开始下载",Toast.LENGTH_SHORT).show();
                             }
                         }).setNegativeButton("返回",null).show();
             }

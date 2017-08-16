@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +26,8 @@ public class MainActivity extends Activity {
 //    private LocalBroadcastManager bManager;
     private TextView tv_phone_index;
     private Toolbar toolbar;
-    private ProgressBar progress;
-    private TextView progress_text;
+//    private ProgressBar progress;
+//    private TextView progress_text;
 
 //    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 //        @Override
@@ -138,8 +137,8 @@ public class MainActivity extends Activity {
     }
 
     private void initView() {
-        progress = (ProgressBar) findViewById(R.id.progress);
-        progress_text = (TextView) findViewById(R.id.progress_text);
+//        progress = (ProgressBar) findViewById(R.id.progress);
+//        progress_text = (TextView) findViewById(R.id.progress_text);
         tv_phone_index = (TextView) findViewById(R.id.tv_phone_index);
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setTitle("日志开启中...");
