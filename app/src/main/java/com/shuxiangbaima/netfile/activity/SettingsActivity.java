@@ -1,7 +1,6 @@
 package com.shuxiangbaima.netfile.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,30 +26,10 @@ public class SettingsActivity extends Activity {
     private Toolbar bar;
     private LocalBroadcastManager bManager;
 
-//    private boolean isShowDialog=false;
-//    private ProgressDialog dialog;
-
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-//            if (intent.getAction().equals(MESSAGE_PROGRESS)) {
-//                //接收到第一时间创建对话框
-//                if (!isShowDialog){
-////                //创建对话框
-//                    dialog = new ProgressDialog(SettingsActivity.this);
-//                    dialog.setCancelable(true);// 设置是否可以通过点击Back键取消
-//                    dialog.setTitle("下载");
-//                    dialog.setMax(100);
-//                    dialog.show();
-//                }
-//                Download download = intent.getParcelableExtra("download");
-//                int l=download.getProgress();
-//                dialog.setProgress(l);
-//                if (l>=100){
-//                    dialog.dismiss();
-//                }
-//            }
         }
     };
 

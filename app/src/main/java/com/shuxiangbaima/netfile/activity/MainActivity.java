@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shuxiangbaima.netfile.Config;
 import com.shuxiangbaima.netfile.DeviceInfo;
@@ -16,7 +15,6 @@ import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.NetConnectUtil;
 import com.shuxiangbaima.netfile.R;
 import com.shuxiangbaima.netfile.downutils.DeviceInfoUploadUtil;
-import com.shuxiangbaima.netfile.downutils.WordsDownUtil;
 
 public class MainActivity extends Activity {
     private static final String TAG="MainActivity";
@@ -88,7 +86,8 @@ public class MainActivity extends Activity {
         final long curTime =System.currentTimeMillis();
         long oldTime = preferences.getLong("timeLastSubmit", 0);
         MyLog.e(TAG,"与记录的时间间隔为:"+(curTime-oldTime)/1000+"秒");
-        if (curTime-oldTime>600000){
+        if (curTime-oldTime>6000){
+            MyLog.e("===========",DeviceInfo.getDeviceInfo(MainActivity.this));
             DeviceInfoUploadUtil.deviceDown(Config.deviceInfoUpdate+DeviceInfo.getDeviceInfo(MainActivity.this),MainActivity.this);
             edit.putLong("timeLastSubmit",curTime);
             edit.commit();
