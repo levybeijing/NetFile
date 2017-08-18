@@ -22,9 +22,8 @@ import com.shuxiangbaima.netfile.DeviceInfo;
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.NetConnectUtil;
 import com.shuxiangbaima.netfile.R;
-import com.shuxiangbaima.netfile.activity.MainActivity;
-import com.shuxiangbaima.netfile.activity.VersionUpdate;
 import com.shuxiangbaima.netfile.activity.PluginDownActivity;
+import com.shuxiangbaima.netfile.activity.VersionUpdate;
 import com.shuxiangbaima.netfile.downutils.DeviceInfoUploadUtil;
 import com.shuxiangbaima.netfile.downutils.WordsDownUtil;
 
@@ -256,14 +255,19 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final EditText editText = new EditText(context);
         AlertDialog.Builder inputDialog =
                 new AlertDialog.Builder(context);
-        editText.setText(DeviceInfo.getIndex());
+        final String old = DeviceInfo.getIndex();
+        editText.setText(old);
         inputDialog.setTitle("请设置设备编号").setView(editText);
         inputDialog.setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!editText.getText().toString().trim().isEmpty()){
-                            String edit="phone_index:"+editText.getText().toString().trim();
+                        String trim = editText.getText().toString().trim();
+                        if (old.equals(trim)){
+                            return;
+                        }
+                        if (!trim.isEmpty()){
+                            String edit="phone_index:"+ trim;
                             MyLog.e("setDeviceIndex:",edit);
                             File file=new File(Config.phoneConfig);
                             try {
@@ -275,6 +279,10 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 FileOutputStream fos=new FileOutputStream(file);
                                 fos.write(edit.getBytes());
                                 fos.close();
+                                SharedPreferences preferences = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor e = preferences.edit();
+                                e.putBoolean("initSubmit",false);
+                                e.commit();
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
@@ -287,5 +295,6 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 })
                 .setNegativeButton("取消",null);
         inputDialog.show();
+
     }
 }
