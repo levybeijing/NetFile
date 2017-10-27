@@ -53,6 +53,10 @@
             android:enabled="true"
             android:exported="true"
             />
+        <service android:name=".VerificationService"
+            android:enabled="true"
+            android:exported="true"
+            />
     </application>
 
 </manifest>

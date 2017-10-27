@@ -19,5 +19,6 @@ public class Config {
     public static String pluginUrl="http://robot.shuxiangbaima.com/gr/widget/plugins";
     //字库接口
     public static String wordsUrl="http://robot.shuxiangbaima.com/gr/widget/words";
-
+    //验证码图片接口validate code
+    public static String validateUrl="http://robot.shuxiangbaima.com/gr/ocr/decode";
 }
