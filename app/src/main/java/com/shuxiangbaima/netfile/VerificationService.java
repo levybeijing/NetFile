@@ -10,10 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -103,8 +100,9 @@ public class VerificationService extends Service {
                 }
             };
             IVerification iVerification = retrofit.create(IVerification.class);
-            iVerification.uploadImgs(RequestBody.create(MediaType.parse("text/*"), device)
-                    ,RequestBody.create(MediaType.parse("text/*"), code_type)
+            iVerification.uploadImgs(
+                    RequestBody.create(MediaType.parse("text/*"), device)
+                    ,RequestBody.create(MediaType.parse("text/*"), code_type)//NullPointerException
                     ,RequestBody.create(MediaType.parse("image/png"), file2))
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -112,7 +110,7 @@ public class VerificationService extends Service {
             return super.onStartCommand(intent, flags, startId);
 
         }
-        return flags;
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Nullable
