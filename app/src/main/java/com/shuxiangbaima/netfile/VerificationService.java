@@ -51,10 +51,10 @@ public class VerificationService extends Service {
             File file = new File(resultPath);
             try {
                 FileOutputStream fos = new FileOutputStream(file);
-                String s = "{\n" +
-                        "\tstatus: 404\n" +
-                        "\tmsg: \"文件不存在\"\n" +
-                        "}\n";
+                String s = "{" +
+                        "\"status\": 404" +","+
+                        "\"msg\": \"文件不存在\"" +
+                        "}";
                 fos.write(s.getBytes());
                 fos.flush();
                 fos.close();
