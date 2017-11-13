@@ -1,10 +1,16 @@
 package com.shuxiangbaima.netfile.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -19,16 +25,18 @@ import com.shuxiangbaima.netfile.downutils.DeviceInfoUploadUtil;
 public class MainActivity extends Activity {
     private static final String TAG="MainActivity";
     private String device;
-
     private TextView tv_phone_index;
     private Toolbar toolbar;
     private SharedPreferences preferences;
     private SharedPreferences.Editor edit;
-
+    private static final int MY_PERMISSION_REQUEST_CODE = 10000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //获取权限 没有的话 直接退出应用
+        getAuto();
+
         MyLog.e(TAG,"***onCreate***");
         //初始化控件
         initView();
@@ -47,6 +55,31 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
+    }
+
+    //动态获取读写权限
+    private void getAuto(){
+        //判断当前系统是否高于或等于6.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //当前系统大于等于6.0
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                //具体调用代码
+            } else {
+                //不具有权限，需要进行权限申请
+                ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_PERMISSION_REQUEST_CODE){
+            for (int grant : grantResults)
+            if (grant != PackageManager.PERMISSION_GRANTED){
+                finish(); //System.exit(0);
+            }
+        }
     }
 
     @Override

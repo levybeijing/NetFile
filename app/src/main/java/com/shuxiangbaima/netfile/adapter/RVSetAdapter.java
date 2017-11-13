@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -276,6 +277,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     new File(dir).mkdirs();
                                     file=new File(Config.phoneConfig);
                                 }
+                                Log.e(TAG, "=====onClick: "+file.getAbsoluteFile());
                                 FileOutputStream fos=new FileOutputStream(file);
                                 fos.write(edit.getBytes());
                                 fos.close();
