@@ -264,6 +264,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String trim = editText.getText().toString().trim();
+                        //空指针异常
                         if (old.equals(trim)){
                             return;
                         }
