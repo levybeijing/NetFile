@@ -43,9 +43,6 @@ public class DeviceInfoUploadUtil {
                 if (url.contains(Config.deviceInfoInit)){
                     Toast.makeText(context,"设备信息已经初始化",Toast.LENGTH_SHORT).show();
                     MyLog.e(TAG,"设备信息初始化成功");
-                }else{
-                    Toast.makeText(context,"设备信息已经更新",Toast.LENGTH_SHORT).show();
-                    MyLog.e(TAG,"设备信息更新成功");
                 }
             }
 
@@ -56,19 +53,22 @@ public class DeviceInfoUploadUtil {
             }
 
             @Override
-            public void onNext(DeviceInfoBackBean deviceInfo) {
+
+             public void onNext(DeviceInfoBackBean deviceInfo) {
                 SharedPreferences config = context.getSharedPreferences("config", Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit = config.edit();
-
                 if (deviceInfo.getStatus()==200){
                     edit.putString("deviceInfo", DeviceInfo.getInfoNoIndex(context).toString());
                     edit.commit();
                     edit.putBoolean("successLastSubmit",true);
                     edit.commit();
+                    Toast.makeText(context,"设备信息已经更新",Toast.LENGTH_SHORT).show();
+                    MyLog.e(TAG,"设备信息更新成功");
                 }else{
                     MyLog.e(TAG,"设备信息上传失败:"+deviceInfo.getMsg());
                     edit.putBoolean("successLastSubmit",false);
                     edit.commit();
+                    Toast.makeText(context,deviceInfo.getMsg(),Toast.LENGTH_SHORT).show();
                 }
             }
         };

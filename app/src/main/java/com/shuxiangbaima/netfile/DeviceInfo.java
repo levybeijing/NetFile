@@ -1,9 +1,13 @@
 package com.shuxiangbaima.netfile;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
 import java.io.BufferedReader;
@@ -18,17 +22,21 @@ import java.io.IOException;
 
 public class DeviceInfo {
 
-    public static StringBuilder getDeviceInfo(Context context){
+    public static StringBuilder getDeviceInfo(Context context) {
 
-        String device=getIndex();//设备编号
+        String device = getIndex();//设备编号
 
-        StringBuilder sb =getInfoNoIndex(context);
+        StringBuilder sb = getInfoNoIndex(context);
         sb.append("&");
         sb.append("device=").append(device);
         return sb;
     }
-    public static StringBuilder getInfoNoIndex(Context context){
 
+    public static StringBuilder getInfoNoIndex(Context context) {
+        //动态获取权限
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},10001);
+        }
         String imei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         //获取手机信息
         String brand= Build.BRAND;//brand	品牌

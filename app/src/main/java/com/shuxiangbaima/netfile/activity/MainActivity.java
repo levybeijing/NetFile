@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //获取权限 没有的话 直接退出应用
-        getAuto();
+        getPermission();
 
         MyLog.e(TAG,"***onCreate***");
         //初始化控件
@@ -58,14 +58,12 @@ public class MainActivity extends Activity {
     }
 
     //动态获取读写权限
-    private void getAuto(){
+    private void getPermission(){
         //判断当前系统是否高于或等于6.0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //当前系统大于等于6.0
-            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 //具体调用代码
-            } else {
-                //不具有权限，需要进行权限申请
                 ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_PERMISSION_REQUEST_CODE);
             }
         }
@@ -80,11 +78,26 @@ public class MainActivity extends Activity {
                 finish(); //System.exit(0);
             }
         }
+        if (requestCode == 10001){
+            for (int grant : grantResults)
+                if (grant != PackageManager.PERMISSION_GRANTED){
+                    finish(); //System.exit(0);
+                }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //判断是否有设备编号 没有的话 直接跳过后面的代码
+        String index = DeviceInfo.getIndex();
+        if (index==null){
+            MyLog.e("onResume","设备编号为空");
+            tv_phone_index.setText("暂无设备编号");
+            return;
+        }else{
+            tv_phone_index.setText("设备编号:"+ index);
+        }
         //检测日至开关
         boolean isCheck = preferences.getBoolean("logToggle", true);
         toolbar.setTitle(isCheck?"日志开启中...":"日志关闭中...");
@@ -98,15 +111,6 @@ public class MainActivity extends Activity {
         if (!NetConnectUtil.isAnyConn(this)){
             MyLog.e("onResume","无网络");
             return;
-        }
-        //判断是否有设备编号 没有的话 直接跳过后面的代码
-        String index = DeviceInfo.getIndex();
-        if (index==null){
-            MyLog.e("onResume","设备编号为空");
-            tv_phone_index.setText("暂无设备编号");
-            return;
-        }else{
-            tv_phone_index.setText("设备编号:"+ index);
         }
         //处理逻辑  上次提交是否成功
         boolean lastSubmit = preferences.getBoolean("successLastSubmit", true);
