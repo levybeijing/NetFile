@@ -61,9 +61,10 @@ public class MainActivity extends Activity {
     private void getPermission(){
         //判断当前系统是否高于或等于6.0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            //当前系统大于等于6.0
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},10001);
+            }
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                //具体调用代码
                 ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_PERMISSION_REQUEST_CODE);
             }
         }
@@ -74,9 +75,9 @@ public class MainActivity extends Activity {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MY_PERMISSION_REQUEST_CODE){
             for (int grant : grantResults)
-            if (grant != PackageManager.PERMISSION_GRANTED){
-                finish(); //System.exit(0);
-            }
+                if (grant != PackageManager.PERMISSION_GRANTED){
+                    finish(); //System.exit(0);
+                }
         }
         if (requestCode == 10001){
             for (int grant : grantResults)
