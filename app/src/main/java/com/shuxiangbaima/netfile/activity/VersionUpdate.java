@@ -30,7 +30,7 @@ public class VersionUpdate {
     public static void updatecheck( final Context context) throws PackageManager.NameNotFoundException {
 
         final Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://api.shuxiangbaima.com/")
+                .baseUrl("http://www.bqjy8.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

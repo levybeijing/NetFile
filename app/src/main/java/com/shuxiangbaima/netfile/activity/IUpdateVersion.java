@@ -12,7 +12,7 @@ import rx.Observable;
  */
 
 public interface IUpdateVersion {
-    @POST("version/check")
+    @POST("api/app/check_version")
     @FormUrlEncoded
     Observable<VersionUpdateBean> checkUpdate(@Field("package") String pkg,
                                               @Field("version") String ver);
