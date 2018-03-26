@@ -6,14 +6,13 @@ android {
     defaultConfig {
         applicationId "com.shuxiangbaima.netfile"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 35
-        versionName "1.8.4"
+        versionName "1.8.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,11 +24,12 @@ android {
             keyPassword "123456"
         }
     }
-
     buildTypes {
         release {
             signingConfig signingConfigs.release
         }
+    }
+    productFlavors {
     }
 }
 
