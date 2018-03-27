@@ -75,7 +75,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     MyLog.setLogWritable(isChecked);
                     edit.putBoolean("logToggle",isChecked);
                     edit.commit();
-                    if (isCheck){
+                    if (isChecked){
                         Toast.makeText(context,"日志开启",Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(context,"日志关闭",Toast.LENGTH_SHORT).show();
