@@ -23,6 +23,7 @@ import com.shuxiangbaima.netfile.DeviceInfo;
 import com.shuxiangbaima.netfile.MyLog;
 import com.shuxiangbaima.netfile.NetConnectUtil;
 import com.shuxiangbaima.netfile.R;
+import com.shuxiangbaima.netfile.SharePF;
 import com.shuxiangbaima.netfile.activity.PluginDownActivity;
 import com.shuxiangbaima.netfile.activity.VersionUpdate;
 import com.shuxiangbaima.netfile.downutils.DeviceInfoUploadUtil;
@@ -66,7 +67,7 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final SharedPreferences.Editor edit = preferences.edit();
         final String index = DeviceInfo.getIndex();
         if (position==0){
-            final boolean isCheck = preferences.getBoolean("logToggle", true);
+            boolean isCheck = preferences.getBoolean("logToggle", true);
             ((MyViewHolder0)holder).s.setText("日志开关");
             ((MyViewHolder0)holder).s.setChecked(isCheck);
             ((MyViewHolder0)holder).s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -175,8 +176,6 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             });
         }
-
-
     }
 
     @Override
