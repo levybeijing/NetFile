@@ -45,9 +45,9 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private String[] array;
 
-    public RVSetAdapter(Context context_,String[] array_){
+    public RVSetAdapter(Context context_){
         this.context=context_;
-        this.array=array_;
+        this.array=context_.getResources().getStringArray(R.array.sets);
     }
 
     @Override
@@ -238,13 +238,10 @@ public class RVSetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         cleanDir.delete();
     }
-
+    //获取版本信息
     public String getVersion() {
         try {
-            PackageManager manager = context.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(),0);
-            String version = info.versionName;
-            return version;
+            return context.getPackageManager().getPackageInfo(context.getPackageName(),0).versionName;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
