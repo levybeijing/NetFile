@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
                     case R.id.settings:
                         startActivity(new Intent(MainActivity.this,SettingsActivity.class));
                         break;
+
                 }
                 return false;
             }
@@ -75,6 +76,7 @@ public class MainActivity extends Activity {
         if (requestCode == MY_PERMISSION_REQUEST_CODE){
             for (int grant : grantResults)
                 if (grant != PackageManager.PERMISSION_GRANTED){
+                //直接退出?
                     finish(); //System.exit(0);
                 }
         }
