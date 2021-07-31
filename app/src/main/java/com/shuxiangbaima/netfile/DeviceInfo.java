@@ -41,9 +41,9 @@ public class DeviceInfo {
         }
         String imei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         //获取手机信息
-        String brand= Build.BRAND;//brand	品牌
+        String brand = Build.BRAND;//brand	品牌
 
-        String model=Build.MODEL;//model	机型
+        String model = Build.MODEL;//model	机型
 
         WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
@@ -76,10 +76,10 @@ public class DeviceInfo {
     }
 
     public static String getIndex() {
-        File index=new File(Config.phoneConfig);
-        if (index.exists()){
+        File index = new File(Config.phoneConfig);
+        if (index.exists()) {
             try {
-                String phone_index=new BufferedReader(new FileReader(index)).readLine();
+                String phone_index = new BufferedReader(new FileReader(index)).readLine();
                 return phone_index.substring(phone_index.indexOf(":") + 1, phone_index.length());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

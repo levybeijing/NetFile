@@ -9,15 +9,17 @@ import android.net.ConnectivityManager;
 
 public class NetConnectUtil {
 
-    public static boolean isWIfiConn(Context context){
+    public static boolean isWIfiConn(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
     }
-    public static boolean isNetConn(Context context){
+
+    public static boolean isNetConn(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected();
     }
-    public static boolean isAnyConn(Context context){
-        return isNetConn(context)||isWIfiConn(context);
+
+    public static boolean isAnyConn(Context context) {
+        return isNetConn(context) || isWIfiConn(context);
     }
 }

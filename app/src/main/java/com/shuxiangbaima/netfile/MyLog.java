@@ -14,9 +14,9 @@ import java.util.Date;
 
 public class MyLog {
 
-    private static Boolean MYLOG_WRITE_TO_FILE=true;// 日志写入文件开关
+    private static Boolean MYLOG_WRITE_TO_FILE = true;// 日志写入文件开关
 
-    private static String MYLOG_PATH_SDCARD_DIR="/sdcard/sxbm/logs/";// 日志文件在sdcard中的路径
+    private static String MYLOG_PATH_SDCARD_DIR = "/sdcard/sxbm/logs/";// 日志文件在sdcard中的路径
 
     private static int SDCARD_LOG_FILE_SAVE_DAYS = 0;// sd卡中日志文件的最多保存天数
 
@@ -35,8 +35,8 @@ public class MyLog {
     }
 
     private static void log(String tag, String msg, char level) {
-            if (MYLOG_WRITE_TO_FILE)
-                writeLogtoFile(String.valueOf(level), tag, msg);
+        if (MYLOG_WRITE_TO_FILE)
+            writeLogtoFile(String.valueOf(level), tag, msg);
     }
 
     private static void writeLogtoFile(String mylogtype, String tag, String text) {// 新建或打开日志文件
@@ -44,13 +44,13 @@ public class MyLog {
         String needWriteFile = logfile.format(nowtime);
         String needWriteMessage = myLogSdf.format(nowtime) + "    " + mylogtype
                 + "    " + tag + "    " + text;
-        int month = nowtime.getMonth()+1;
-        int year = nowtime.getYear()+1900;
-        String path=MYLOG_PATH_SDCARD_DIR+year+File.separator+month;
+        int month = nowtime.getMonth() + 1;
+        int year = nowtime.getYear() + 1900;
+        String path = MYLOG_PATH_SDCARD_DIR + year + File.separator + month;
         //创建相应目录
         File file = new File(path, needWriteFile
                 + MYLOGFILEName);
-        if (!file.exists()){
+        if (!file.exists()) {
             new File(path).mkdirs();
             file = new File(path, needWriteFile
                     + MYLOGFILEName);
@@ -77,7 +77,7 @@ public class MyLog {
 
     /**
      * 得到现在时间前的几天日期，用来得到需要删除的日志文件名
-     * */
+     */
     private static Date getDateBefore() {
         Date nowtime = new Date();
         Calendar now = Calendar.getInstance();
@@ -86,11 +86,12 @@ public class MyLog {
                 - SDCARD_LOG_FILE_SAVE_DAYS);
         return now.getTime();
     }
-    public static void setLogWritable(boolean log){
-        MYLOG_WRITE_TO_FILE=log;
+
+    public static void setLogWritable(boolean log) {
+        MYLOG_WRITE_TO_FILE = log;
     }
 
-    public static boolean getLogWritable(){
+    public static boolean getLogWritable() {
         return MYLOG_WRITE_TO_FILE;
     }
 }

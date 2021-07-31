@@ -23,34 +23,34 @@ import java.util.List;
  */
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
-    private List<PluginListBean> list=new ArrayList<>();
+    private List<PluginListBean> list = new ArrayList<>();
     private Context context;
-    private String plugin_path="/sdcard/MobileAnJian/Plugin";
+    private String plugin_path = "/sdcard/MobileAnJian/Plugin";
 
-    public RVAdapter(List<PluginListBean> list_, Context context_){
-        this.list=list_;
-        this.context=context_;
+    public RVAdapter(List<PluginListBean> list_, Context context_) {
+        this.list = list_;
+        this.context = context_;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_rv_main,parent,false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_rv_main, parent, false));
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         String name = list.get(position).getPlugin();
-        MyLog.e("插件名称:",name);
+        MyLog.e("插件名称:", name);
         holder.tv.setText(name);
         holder.ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //下载插件
-                if (new File(plugin_path).exists()){
-                    ConcretePluginUtil.pluginDown(list.get(position).getDownload_url(),context);
-                }else{
-                    Toast.makeText(context,"请启动按键精灵",Toast.LENGTH_SHORT).show();
+                if (new File(plugin_path).exists()) {
+                    ConcretePluginUtil.pluginDown(list.get(position).getDownload_url(), context);
+                } else {
+                    Toast.makeText(context, "请启动按键精灵", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -61,15 +61,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
         return list.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
-    {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
         Button ib;
-        public MyViewHolder(View view)
-        {
+
+        public MyViewHolder(View view) {
             super(view);
-            tv= (TextView) view.findViewById(R.id.recyclerview_item_tv);
-            ib= (Button) view.findViewById(R.id.recyclerview_item_btn);
+            tv = (TextView) view.findViewById(R.id.recyclerview_item_tv);
+            ib = (Button) view.findViewById(R.id.recyclerview_item_btn);
         }
     }
 

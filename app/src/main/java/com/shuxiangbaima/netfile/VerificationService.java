@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
 import com.shuxiangbaima.netfile.downutils.IVerification;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -36,20 +39,20 @@ public class VerificationService extends Service {
         //如果result文件存在则删除
         String resultPath = "/sdcard/dszh/ocr/result.txt";
         File file1 = new File(resultPath);
-        Log.e(TAG, "============原result文件是否存在:"+file1.exists());
+        Log.e(TAG, "============原result文件是否存在:" + file1.exists());
         if (file1.exists()) {
             file1.delete();
         }
         //假如图片文件不存在
         String imagePath = "/sdcard/dszh/ocr/code.png";
         File file2 = new File(imagePath);
-        Log.e(TAG, "============图片文件是否存在:"+file2.exists());
+        Log.e(TAG, "============图片文件是否存在:" + file2.exists());
         if (!file2.exists()) {
             File file = new File(resultPath);
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 String s = "{" +
-                        "\"status\": 404" +","+
+                        "\"status\": 404" + "," +
                         "\"msg\": \"文件不存在\"" +
                         "}";
                 fos.write(s.getBytes());
@@ -81,7 +84,7 @@ public class VerificationService extends Service {
                 @Override
                 public void onError(Throwable e) {
                     MyLog.e(TAG, "onError:" + e.getMessage());
-                    Log.e(TAG, "============onError:"+e.getMessage());
+                    Log.e(TAG, "============onError:" + e.getMessage());
                 }
 
                 @Override
@@ -102,8 +105,8 @@ public class VerificationService extends Service {
             IVerification iVerification = retrofit.create(IVerification.class);
             iVerification.uploadImgs(
                     RequestBody.create(MediaType.parse("text/*"), device)
-                    ,RequestBody.create(MediaType.parse("text/*"), code_type)//NullPointerException
-                    ,RequestBody.create(MediaType.parse("image/png"), file2))
+                    , RequestBody.create(MediaType.parse("text/*"), code_type)//NullPointerException
+                    , RequestBody.create(MediaType.parse("image/png"), file2))
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscribe);

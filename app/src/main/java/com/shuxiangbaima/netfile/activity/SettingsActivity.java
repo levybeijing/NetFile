@@ -22,7 +22,7 @@ import com.shuxiangbaima.netfile.adapter.RVSetAdapter;
 
 public class SettingsActivity extends Activity {
     public static final String MESSAGE_PROGRESS = "message_progress";
-    private static final String TAG="SettingsActivity";
+    private static final String TAG = "SettingsActivity";
     private Toolbar bar;
     private LocalBroadcastManager bManager;
 
@@ -49,15 +49,16 @@ public class SettingsActivity extends Activity {
         });
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv_settings);
-        GridLayoutManager manager=new GridLayoutManager(this,1);
+        GridLayoutManager manager = new GridLayoutManager(this, 1);
         rv.setLayoutManager(manager);
         String[] array = getResources().getStringArray(R.array.sets);
-        RVSetAdapter adapter=new RVSetAdapter(this,array);
+        RVSetAdapter adapter = new RVSetAdapter(SettingsActivity.this);
         rv.setAdapter(adapter);
 
 
         registerReceiver();
     }
+
     private void registerReceiver() {
         bManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
@@ -68,7 +69,7 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MyLog.e(TAG,"***onDestroy***");
+        MyLog.e(TAG, "***onDestroy***");
         bManager.unregisterReceiver(broadcastReceiver);
     }
 }
